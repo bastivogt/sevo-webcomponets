@@ -10,6 +10,21 @@ body {
   font-family: "Open Sans", sans-serif;
 }
 
+/* page fade in */
+body {
+  animation: fadeInAnimation ease 0.8s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 #header-image::part(container) {
   height: 700px;
 }
