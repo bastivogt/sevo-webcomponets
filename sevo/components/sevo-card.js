@@ -10,7 +10,7 @@ template.innerHTML = /*html*/ `
 
         #sevo-card-header {
             padding: 10px 20px;
-            background-color: rgb(250, 250, 250);
+            background-color: rgb(245, 245, 245);
             
         }
 
