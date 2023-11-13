@@ -9,5 +9,5 @@ document.addEventListener("click", () => {
   console.log("fixed", headerImage.getAttribute("fixed"));
   //headerImage.setAttribute("content-horizontal", "start");
   fixed = !fixed;
-  headerImage.setAttribute("fixed", fixed);
+  //headerImage.setAttribute("fixed", fixed);
 });

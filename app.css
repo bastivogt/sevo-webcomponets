@@ -18,3 +18,12 @@ body {
   color: white;
   font-size: 64px;
 }
+
+sevo-card h1,
+sevo-card h2,
+sevo-card h3,
+sevo-card h4,
+sevo-card h5,
+sevo-card h6 {
+  color: rebeccapurple;
+}
