@@ -185,7 +185,7 @@ class SevoSection extends HTMLElement {
 
     // height
     if (this.height) {
-      this.elements.sectionContainer.style["height"] = `${this.height}px`;
+      this.elements.sectionContainer.style["height"] = `${this.height}`;
     }
 
     // contentHorizontal

@@ -51,7 +51,7 @@
         content-horizontal="center"
         content-vertical="center"
         fixed="true"
-        height="400"
+        height="500px"
       ></sevo-section>
       <sevo-section>
         <h2>Test</h2>
@@ -82,7 +82,7 @@
         </p>
       </sevo-content-box>
       <sevo-section>
-        <sevo-2-columns gap="10">
+        <sevo-2-columns gap="10px">
           <sevo-content-box slot="column-1" background-color="lightgrey">
             <h3>Column 1</h3>
             <p>
@@ -229,6 +229,61 @@
             </p>
           </sevo-content-box>
         </sevo-4-columns>
+      </sevo-section>
+      <sevo-section>
+        <sevo-2-columns>
+          <sevo-card slot="column-1" body-min-height="150px">
+            <h3 slot="header">Card 1</h3>
+            <p slot="body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+              consequatur eligendi sit tempore provident fuga aperiam debitis
+              similique nemo iste ab fugit quibusdam beatae veritatis, quia
+              illum nam accusantium aliquid.
+            </p>
+            <div slot="footer">Footer</div>
+          </sevo-card>
+          <sevo-card slot="column-2" body-min-height="150px">
+            <h3 slot="header">Card 2</h3>
+            <p slot="body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+              consequatur eligendi sit tempore provident fuga aperiam debitis
+              similique nemo iste ab fugit quibusdam beatae veritatis, quia
+              illum nam accusantium aliquid.
+            </p>
+            <div slot="footer">Footer</div>
+          </sevo-card>
+        </sevo-2-columns>
+      </sevo-section>
+
+      <sevo-section>
+        <sevo-2-columns>
+          <sevo-card slot="column-1" body-min-height="100">
+            <img
+              slot="image"
+              src="./images/bird-1045954_1920.jpg"
+              width="100%"
+            />
+            <p slot="body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+              consequatur eligendi sit tempore provident fuga aperiam debitis
+              similique nemo iste ab fugit quibusdam beatae veritatis, quia
+              illum nam accusantium aliquid.
+            </p>
+          </sevo-card>
+          <sevo-card slot="column-2" body-min-height="100">
+            <img
+              slot="image"
+              src="./images/road-1072821_1920.jpg"
+              width="100%"
+            />
+            <p slot="body">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus
+              consequatur eligendi sit tempore provident fuga aperiam debitis
+              similique nemo iste ab fugit quibusdam beatae veritatis, quia
+              illum nam accusantium aliquid.
+            </p>
+          </sevo-card>
+        </sevo-2-columns>
       </sevo-section>
     </main>
 

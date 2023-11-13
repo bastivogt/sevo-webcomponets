@@ -69,7 +69,7 @@ class Sevo4Columns extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
     // gap
     if (this.gap) {
-      this.elements.columnsContainer.style["gap"] = `${this.gap}px`;
+      this.elements.columnsContainer.style["gap"] = `${this.gap}`;
     }
   }
 }
