@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="app.css" />
+    <title>Sevo Componenents</title>
+  </head>
+  <body>
+    <header>
+      <sevo-section
+        id="header-image"
+        image-src="./images/bird-1045954_1920.jpg"
+        content-horizontal="center"
+        content-vertical="center"
+        fixed="false"
+        ><h1 class="text-shadow">Eine Überschrift</h1></sevo-section
+      >
+    </header>
+    <main>
+      <sevo-section background-color="rebeccapurple" color="white">
+        <h2>Bla bla bla</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat
+          incidunt ratione vel ea adipisci quod aperiam amet architecto,
+          quaerat, quo atque provident sed repellendus sit dolor rem molestiae
+          nam iure, animi laboriosam ipsam quibusdam quam voluptate. Distinctio,
+          impedit! Facere molestiae laboriosam nesciunt aperiam quisquam. Labore
+          quis doloremque delectus eveniet, facilis cupiditate excepturi soluta
+          eligendi! Voluptatibus quas id pariatur sequi non voluptates a iure in
+          nesciunt, sit similique laboriosam quasi, totam cupiditate eum? Quam
+          in doloribus maiores dolore aspernatur, repudiandae enim dicta
+          mollitia, laudantium totam, reprehenderit modi veritatis. Iure
+          sapiente animi laudantium. Enim possimus dolorum debitis autem vitae
+          omnis et ullam. Neque vel at reiciendis dolor ea magni nobis enim
+          saepe ratione, deserunt placeat labore aspernatur. Cumque deleniti
+          accusantium enim sapiente voluptates deserunt corrupti aut porro,
+          incidunt fugit rem atque voluptatibus molestiae beatae labore,
+          temporibus nostrum iste magni explicabo vel. Exercitationem fuga illo
+          ab dolorum sed et optio harum at blanditiis vero molestiae ad quidem,
+          laborum voluptate laboriosam laudantium, dolor corrupti. Doloribus
+          enim unde, praesentium deserunt inventore fugiat sint eius libero
+          quae! Consequuntur quisquam amet culpa maxime quod iusto facilis
+          quidem, nostrum voluptatum odit unde deleniti. Dignissimos, nemo
+          excepturi esse fugiat aut natus, perferendis officia praesentium
+          aliquid voluptates porro ratione hic!
+        </p>
+      </sevo-section>
+      <sevo-section
+        image-src="./images/flowers-276014_1920.jpg"
+        content-horizontal="center"
+        content-vertical="center"
+        fixed="true"
+        height="400"
+      ></sevo-section>
+      <sevo-section>
+        <h2>Test</h2>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
+          ducimus error nostrum deserunt, placeat facere nihil qui obcaecati
+          rerum, natus sapiente! Id ut quas architecto consequatur quidem fugit
+          vitae veniam accusantium adipisci placeat inventore dolore, nostrum
+          consequuntur error soluta eaque doloremque nemo reprehenderit,
+          quisquam quos vel explicabo officiis. Laudantium, sapiente cum
+          doloribus dolor asperiores necessitatibus, alias eos ex repellat
+          commodi, sit in fuga beatae expedita! Rerum dolorem iusto deserunt id,
+          mollitia quae eos neque dolore ex hic corporis autem, iure assumenda
+          at voluptates atque sunt aspernatur doloremque distinctio nobis quas.
+          Minima nobis cupiditate voluptates totam. Animi molestias perferendis
+          quo hic?
+        </p>
+      </sevo-section>
+      <sevo-content-box background-color="red" color="white">
+        <h3>Sevo Content Box</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Debitis
+          exercitationem soluta magnam quod consequuntur tenetur ipsa cumque
+          quaerat impedit inventore labore, id porro eligendi voluptatum eaque
+          nisi aliquid odit quae eum vero. Incidunt, quasi. Laboriosam,
+          assumenda. Corporis in error praesentium ut at veniam, obcaecati,
+          neque possimus excepturi minima non quas?
+        </p>
+      </sevo-content-box>
+      <sevo-section>
+        <sevo-2-columns gap="10">
+          <sevo-content-box slot="column-1" background-color="lightgrey">
+            <h3>Column 1</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-2" background-color="lightgrey">
+            <h3>Column 2</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+        </sevo-2-columns>
+      </sevo-section>
+
+      <sevo-section background-color="rebeccapurple">
+        <sevo-3-columns>
+          <sevo-content-box slot="column-1" color="white">
+            <h3>Column 1</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-2" color="white">
+            <h3>Column 2</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-3" color="white">
+            <h3>Column 3</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+        </sevo-3-columns>
+      </sevo-section>
+
+      <sevo-section background-color="blue">
+        <sevo-4-columns>
+          <sevo-content-box slot="column-1" color="white">
+            <h3>Column 1</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-2" color="white">
+            <h3>Column 2</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-3" color="white">
+            <h3>Column 3</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+          <sevo-content-box slot="column-4" color="white">
+            <h3>Column 4</h3>
+            <p>
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Veniam
+              deleniti totam alias numquam? Laboriosam amet hic id veritatis
+              perferendis commodi quas quod temporibus dolore nulla, aliquid
+              expedita rem tenetur? Illum, nesciunt dicta asperiores nemo nihil
+              molestias exercitationem dolorum itaque? Iure recusandae minima ea
+              maiores necessitatibus, ipsa doloremque eius explicabo tempora.
+            </p>
+          </sevo-content-box>
+        </sevo-4-columns>
+      </sevo-section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

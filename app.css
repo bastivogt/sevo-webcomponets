@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap");
+@import url("./normalize.css");
+@import url("./utils.css");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", sans-serif;
+}
+
+#header-image::part(container) {
+  height: 700px;
+}
+
+#header-image > h1 {
+  color: white;
+  font-size: 64px;
+}
