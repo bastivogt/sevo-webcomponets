@@ -81,6 +81,10 @@ class SevoCard extends HTMLElement {
     }
     if (this.elements.cardImageSlot.assignedNodes().length === 0) {
       this.elements.cardImage.style["display"] = "none";
+    } else {
+      this.elements.cardImageSlot
+        .assignedNodes()[0]
+        .setAttribute("width", "100%");
     }
   }
 

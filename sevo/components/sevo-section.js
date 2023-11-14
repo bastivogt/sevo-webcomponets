@@ -6,7 +6,7 @@
     content-horizontal="center"
     content-vertical="center"
     fixed="false"
-    height="400"
+    height="400px"
     color="red"
     background-color="green"
     >
@@ -58,7 +58,6 @@ template.innerHTML = /*html*/ `
 class SevoSection extends HTMLElement {
   constructor() {
     super();
-
     this.root = this.attachShadow({ mode: "closed" });
     this.root.appendChild(template.content.cloneNode(true));
 
@@ -66,6 +65,10 @@ class SevoSection extends HTMLElement {
       sectionContainer: this.root.querySelector("#sevo-section-container"),
       sectionInner: this.root.querySelector("#sevo-section-inner"),
     };
+  }
+
+  connectedCallback() {
+    //console.log("CONNECTEDCALLBACK");
   }
 
   static get observedAttributes() {
@@ -145,14 +148,6 @@ class SevoSection extends HTMLElement {
 
   set height(value) {
     this.setAttribute("height", value);
-  }
-
-  connectedCallback() {
-    // defaults
-    /*     this.contentHorizontal = "start";
-    this.contentVertical = "start";
-
-    this.imageSrc = null; */
   }
 
   // sttributesChanged
