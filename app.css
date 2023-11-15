@@ -42,3 +42,29 @@ sevo-card h5,
 sevo-card h6 {
   color: rebeccapurple;
 }
+
+#nav-main .close-trigger {
+  color: white;
+}
+
+.main-navigation ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.main-navigation li {
+  margin: 0;
+  padding: 5px 0;
+}
+
+.main-navigation a {
+  text-decoration: none;
+  color: rgb(230, 230, 230);
+  font-size: 22px;
+  transition: all 0.3s ease;
+}
+
+.main-navigation a:hover {
+  color: rebeccapurple;
+}

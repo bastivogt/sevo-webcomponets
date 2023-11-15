@@ -8,13 +8,35 @@
   </head>
   <body>
     <div id="wrapper">
+      <sevo-main-nav
+        id="nav-main"
+        bar-background-color="red"
+        bar-color="blue"
+        overlay-color="yellow"
+        overlay-background-color="black"
+      >
+        <div slot="logo"><h2>Logo</h2></div>
+        <div slot="trigger">Menu</div>
+        <div class="close-trigger" slot="close-trigger">Close</div>
+        <div slot="content" class="main-navigation">
+          <nav>
+            <ul>
+              <li><a href="#" title="Home">Home</a></li>
+              <li><a href="#" title="About">About</a></li>
+              <li><a href="#" title="Team">Team</a></li>
+              <li><a href="#" title="Contact">Contact</a></li>
+            </ul>
+          </nav>
+          <div>TEST</div>
+        </div>
+      </sevo-main-nav>
       <header>
         <sevo-section
           id="header-image"
           image-src="./images/bird-1045954_1920.jpg"
           content-horizontal="center"
           content-vertical="center"
-          fixed="true"
+          fixed="false"
           ><h1 class="text-shadow">Eine Überschrift</h1></sevo-section
         >
       </header>
@@ -52,7 +74,7 @@
           image-src="./images/flowers-276014_1920.jpg"
           content-horizontal="center"
           content-vertical="center"
-          fixed="false"
+          fixed="true"
           height="500px"
         ></sevo-section>
         <sevo-section>
