@@ -30,12 +30,6 @@ template.innerHTML = /*html*/ `
             
         }
 
-
-
-
-
-
-
         #sevo-main-nav-content-container {
             position: relative;
             display: flex;
@@ -54,18 +48,13 @@ template.innerHTML = /*html*/ `
             cursor: pointer;
         }
 
-
         #sevo-main-nav-overlay-content {
             
         }
 
-
-
         .display-none {
             display: none !important;
         }
-
-
     </style>
     <section part="bar-container" id="sevo-main-nav-container">
         <div part="bar-logo" id="sevo-main-nav-logo"><slot name="logo"></slot></div>
@@ -194,7 +183,7 @@ class SevoMainNav extends HTMLElement {
   // closeOverlay
   closeOverlay() {
     this.elements.overlay.classList.add("display-none");
-    document.body.style["overflow-y"] = "scroll";
+    document.body.style["overflow-y"] = "auto";
     this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
   }
 
