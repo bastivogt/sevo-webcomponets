@@ -67,15 +67,15 @@ template.innerHTML = /*html*/ `
 
 
     </style>
-    <section id="sevo-main-nav-container">
-        <div id="sevo-main-nav-logo"><slot name="logo"></slot></div>
-        <div id="sevo-main-nav-trigger"><slot name="trigger"></slot></div>
+    <section part="bar-container" id="sevo-main-nav-container">
+        <div part="bar-logo" id="sevo-main-nav-logo"><slot name="logo"></slot></div>
+        <div part="bar-open-trigger" id="sevo-main-nav-trigger"><slot name="trigger"></slot></div>
     </section>
-    <section id="sevo-main-nav-overlay" class="display-none">
+    <section part="overlay" id="sevo-main-nav-overlay" class="display-none">
         
-        <div id="sevo-main-nav-content-container">
-            <div id="sevo-main-nav-close-trigger"><slot name="close-trigger"></slot></div>
-            <div id="sevo-main-nav-overlay-content"><slot name="content"></slot></div>
+        <div part="overlay-content-container" id="sevo-main-nav-content-container">
+            <div part="close-trigger" id="sevo-main-nav-close-trigger"><slot name="close-trigger"></slot></div>
+            <div part="overlay-content" id="sevo-main-nav-overlay-content"><slot name="content"></slot></div>
         </div>
     </section>
 `;
@@ -95,6 +95,13 @@ class SevoMainNav extends HTMLElement {
       closeContainer: this.root.querySelector("#sevo-main-nav-close-container"),
       closeTrigger: this.root.querySelector("#sevo-main-nav-close-trigger"),
       overlayContent: this.root.querySelector("#sevo-main-nav-overlay-content"),
+    };
+  }
+
+  static get events() {
+    return {
+      OVERLAY_OPENED: "overlay-opened",
+      OVERLAY_CLOSED: "overlay-closed",
     };
   }
 
@@ -145,15 +152,17 @@ class SevoMainNav extends HTMLElement {
     // trigger
     this.elements.trigger.addEventListener("click", () => {
       console.log("SevoMainNav", "trigger clicked");
-      this.elements.overlay.classList.remove("display-none");
-      document.body.style["overflow-y"] = "hidden";
+      /*       this.elements.overlay.classList.remove("display-none");
+      document.body.style["overflow-y"] = "hidden"; */
+      this.openOverlay();
     });
 
     // close-trigger
     this.elements.closeTrigger.addEventListener("click", () => {
       console.log("SevoMainNav", "closeTrigger clicked");
-      this.elements.overlay.classList.add("display-none");
-      document.body.style["overflow-y"] = "scroll";
+      //   this.elements.overlay.classList.add("display-none");
+      //   document.body.style["overflow-y"] = "scroll";
+      this.closeOverlay();
     });
   }
 
@@ -180,6 +189,19 @@ class SevoMainNav extends HTMLElement {
     if (this.overlayColor) {
       this.elements.overlay.style["color"] = this.overlayColor;
     }
+  }
+
+  // closeOverlay
+  closeOverlay() {
+    this.elements.overlay.classList.add("display-none");
+    document.body.style["overflow-y"] = "scroll";
+    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
+  }
+
+  openOverlay() {
+    this.elements.overlay.classList.remove("display-none");
+    document.body.style["overflow-y"] = "hidden";
+    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
   }
 }
 
