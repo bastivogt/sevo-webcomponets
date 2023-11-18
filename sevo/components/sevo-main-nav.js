@@ -23,10 +23,13 @@ template.innerHTML = /*html*/ `
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100vh;
+            bottom: 0;
+            right: 0;
+            /*width: 100%;
+            height: 100vh;*/
             z-index: 9999;
             background-color: rgba(0, 0, 0, .9);
+            /*overflow-y: auto;*/
             
         }
 
@@ -35,6 +38,7 @@ template.innerHTML = /*html*/ `
             display: flex;
             justify-content: center;  
             align-items: center;
+            flex-wrap:wrap;
             /*background-color: red;*/
             height: 100%;
             overflow-y: auto;
@@ -50,6 +54,7 @@ template.innerHTML = /*html*/ `
 
         #sevo-main-nav-overlay-content {
             
+
         }
 
         .display-none {

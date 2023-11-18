@@ -12,9 +12,11 @@ body {
 
 /* page fade in */
 body {
-  animation: fadeInAnimation ease 0.8s;
+  /*animation: fadeInAnimation ease 0.8s;
   animation-iteration-count: 1;
-  animation-fill-mode: forwards;
+  animation-fill-mode: forwards;*/
+
+  animation: fadeInAnimation 1s ease-in-out forwards;
 }
 @keyframes fadeInAnimation {
   0% {

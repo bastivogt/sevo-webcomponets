@@ -11,3 +11,8 @@ document.addEventListener("click", () => {
   fixed = !fixed;
   //headerImage.setAttribute("fixed", fixed);
 });
+
+document.body.addEventListener("body animationend", () => {
+  console.log("animationend");
+  document.body.style["transform"] = "";
+});
