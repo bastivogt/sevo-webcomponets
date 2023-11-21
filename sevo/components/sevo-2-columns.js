@@ -43,6 +43,22 @@ class Sevo2Columns extends HTMLElement {
     this.elements = {
       columnsContainer: this.root.querySelector("#sevo-2-columns-container"),
     };
+
+    // fields for attributes
+    this._gap = null;
+  }
+
+  // connectedCallback
+  connectedCallback() {
+    this._render();
+  }
+
+  // _render
+  _render() {
+    // gap
+    if (this._gap) {
+      this.elements.columnsContainer.style["gap"] = `${this._gap}`;
+    }
   }
 
   // observedAttributes
@@ -50,20 +66,15 @@ class Sevo2Columns extends HTMLElement {
     return ["gap"];
   }
 
-  // gap
-  get gap() {
-    return this.getAttribute("gap");
-  }
-
-  set gap(value) {
-    this.setAttribute("gap", value);
-  }
-
-  //
+  // attributesChanged
   attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
     // gap
-    if (this.gap) {
-      this.elements.columnsContainer.style["gap"] = `${this.gap}`;
+    if (name === "gap") {
+      this._gap = newValue;
+      this._render();
     }
   }
 }

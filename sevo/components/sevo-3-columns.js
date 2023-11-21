@@ -40,12 +40,27 @@ class Sevo3Columns extends HTMLElement {
   constructor() {
     super();
 
-    this.root = this.attachShadow({ mode: "closed" });
-    this.root.appendChild(template.content.cloneNode(true));
+    this._root = this.attachShadow({ mode: "closed" });
+    this._root.appendChild(template.content.cloneNode(true));
 
-    this.elements = {
-      columnsContainer: this.root.querySelector("#sevo-3-columns-container"),
+    this._elements = {
+      columnsContainer: this._root.querySelector("#sevo-3-columns-container"),
     };
+
+    this._gap = null;
+  }
+
+  // connectedCallback
+  connectedCallback() {
+    this._render();
+  }
+
+  // _render
+  _render() {
+    // gap
+    if (this._gap) {
+      this._elements.columnsContainer.style["gap"] = `${this._gap}`;
+    }
   }
 
   // observedAttributes
@@ -53,20 +68,15 @@ class Sevo3Columns extends HTMLElement {
     return ["gap"];
   }
 
-  // gap
-  get gap() {
-    return this.getAttribute("gap");
-  }
-
-  set gap(value) {
-    this.setAttribute("gap", value);
-  }
-
-  //
+  // attributesChanged
   attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
     // gap
-    if (this.gap) {
-      this.elements.columnsContainer.style["gap"] = `${this.gap}px`;
+    if (name === "gap") {
+      this._gap = newValue;
+      this._render();
     }
   }
 }

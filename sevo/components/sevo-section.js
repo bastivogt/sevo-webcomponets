@@ -66,7 +66,7 @@ class SevoSection extends HTMLElement {
       sectionInner: this._root.querySelector("#sevo-section-inner"),
     };
 
-    // for the attributes
+    // fields for the attributes
     this._imageSrc = null;
     this._contentHorizontal = "center";
     this._contentVertical = "center";
@@ -76,6 +76,7 @@ class SevoSection extends HTMLElement {
     this._fixed = "false";
   }
 
+  // connectedCallback
   connectedCallback() {
     //console.log("CONNECTEDCALLBACK");
     this._render();
@@ -163,7 +164,7 @@ class SevoSection extends HTMLElement {
     }
   }
 
-  // sttributesChanged
+  // attributesChanged
   attributeChangedCallback(name, oldValue, newValue) {
     if (oldValue === newValue) {
       return;
@@ -172,7 +173,7 @@ class SevoSection extends HTMLElement {
     // image-src
     if (name === "image-src") {
       this._imageSrc = newValue;
-      this._remder();
+      this._render();
     }
 
     // background-color

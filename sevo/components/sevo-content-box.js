@@ -22,15 +22,37 @@ class SevoContentBox extends HTMLElement {
   constructor() {
     super();
 
-    this.root = this.attachShadow({ mode: "closed" });
-    this.root.appendChild(template.content.cloneNode(true));
+    this._root = this.attachShadow({ mode: "closed" });
+    this._root.appendChild(template.content.cloneNode(true));
 
-    this.elements = {
-      contentBoxContainer: this.root.querySelector(
+    this._elements = {
+      contentBoxContainer: this._root.querySelector(
         "#sevo-content-box-container"
       ),
-      contentBoxInner: this.root.querySelector("#sevo-content-box-inner"),
+      contentBoxInner: this._root.querySelector("#sevo-content-box-inner"),
     };
+
+    this._backgroundColor = "transparent";
+    this._color = null;
+  }
+
+  // connectedCallback
+  connectedCallback() {
+    this._render();
+  }
+
+  // _render
+  _render() {
+    // background-color
+    if (this._backgroundColor) {
+      this._elements.contentBoxContainer.style["background-color"] =
+        this._backgroundColor;
+    }
+
+    // color
+    if (this._color) {
+      this._elements.contentBoxContainer.style["color"] = this._color;
+    }
   }
 
   // observedAttributes
@@ -38,35 +60,21 @@ class SevoContentBox extends HTMLElement {
     return ["background-color", "color"];
   }
 
-  // backgroundColor
-  get backgroundColor() {
-    return this.getAttribute("background-color");
-  }
-
-  set backgroundColor(value) {
-    this.setAttribute("background-color", value);
-  }
-
-  // color
-  get color() {
-    return this.getAttribute("color");
-  }
-
-  set color(value) {
-    this.setAttribute("color", value);
-  }
-
   // sttributesChanged
   attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
     // background-color
-    if (this.backgroundColor) {
-      this.elements.contentBoxContainer.style["background-color"] =
-        this.backgroundColor;
+    if (name === "background-color") {
+      this._backgroundColor = newValue;
+      this._render();
     }
 
     // color
-    if (this.color) {
-      this.elements.contentBoxContainer.style["color"] = this.color;
+    if (name === "color") {
+      this._color = newValue;
+      this._render();
     }
   }
 }

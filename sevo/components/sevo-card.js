@@ -41,19 +41,43 @@ class SevoCard extends HTMLElement {
   constructor() {
     super();
 
-    this.root = this.attachShadow({ mode: "closed" });
-    this.root.appendChild(template.content.cloneNode(true));
+    this._root = this.attachShadow({ mode: "closed" });
+    this._root.appendChild(template.content.cloneNode(true));
 
-    this.elements = {
-      cardContainer: this.root.querySelector("#sevo-card-container"),
-      cardHeader: this.root.querySelector("#sevo-card-header"),
-      cardHeaderSlot: this.root.querySelector("#sevo-card-header > slot"),
-      cardImage: this.root.querySelector("#sevo-card-image"),
-      cardImageSlot: this.root.querySelector("#sevo-card-image > slot"),
-      cardBody: this.root.querySelector("#sevo-card-body"),
-      cardFooter: this.root.querySelector("#sevo-card-footer"),
-      cardFooterSlot: this.root.querySelector("#sevo-card-footer > slot"),
+    this._elements = {
+      cardContainer: this._root.querySelector("#sevo-card-container"),
+      cardHeader: this._root.querySelector("#sevo-card-header"),
+      cardHeaderSlot: this._root.querySelector("#sevo-card-header > slot"),
+      cardImage: this._root.querySelector("#sevo-card-image"),
+      cardImageSlot: this._root.querySelector("#sevo-card-image > slot"),
+      cardBody: this._root.querySelector("#sevo-card-body"),
+      cardFooter: this._root.querySelector("#sevo-card-footer"),
+      cardFooterSlot: this._root.querySelector("#sevo-card-footer > slot"),
     };
+
+    // fields for atrributes
+    this._bodyMinHeight = null;
+  }
+
+  _render() {
+    if (this._elements.cardFooterSlot.assignedNodes().length === 0) {
+      this._elements.cardFooter.style["display"] = "none";
+    }
+    if (this._elements.cardHeaderSlot.assignedNodes().length === 0) {
+      this._elements.cardHeader.style["display"] = "none";
+    }
+    if (this._elements.cardImageSlot.assignedNodes().length === 0) {
+      this._elements.cardImage.style["display"] = "none";
+    } else {
+      this._elements.cardImageSlot
+        .assignedNodes()[0]
+        .setAttribute("width", "100%");
+    }
+
+    // body-min-height
+    if (this._bodyMinHeight) {
+      this._elements.cardBody.style["min-height"] = `${this._bodyMinHeight}`;
+    }
   }
 
   // observedAttributes
@@ -73,26 +97,14 @@ class SevoCard extends HTMLElement {
   connectedCallback() {
     // console.log("CARD conennected callback");
     // console.log(this.elements.cardFooterSlot.assignedNodes());
-    if (this.elements.cardFooterSlot.assignedNodes().length === 0) {
-      this.elements.cardFooter.style["display"] = "none";
-    }
-    if (this.elements.cardHeaderSlot.assignedNodes().length === 0) {
-      this.elements.cardHeader.style["display"] = "none";
-    }
-    if (this.elements.cardImageSlot.assignedNodes().length === 0) {
-      this.elements.cardImage.style["display"] = "none";
-    } else {
-      this.elements.cardImageSlot
-        .assignedNodes()[0]
-        .setAttribute("width", "100%");
-    }
+    this._render();
   }
 
   // attributeChangedCallback
   attributeChangedCallback(name, oldValue, newValue) {
     // body-min-height
     if (this.bodyMinHeight) {
-      this.elements.cardBody.style["min-height"] = `${this.bodyMinHeight}`;
+      this._elements.cardBody.style["min-height"] = `${this.bodyMinHeight}`;
     }
   }
 }

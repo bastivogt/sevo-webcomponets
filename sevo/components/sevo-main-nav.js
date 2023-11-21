@@ -74,22 +74,56 @@ template.innerHTML = /*html*/ `
     </section>
 `;
 
-class SevoMainNav extends HTMLElement {
+export default class SevoMainNav extends HTMLElement {
   constructor() {
     super();
 
-    this.root = this.attachShadow({ mode: "closed" });
-    this.root.appendChild(template.content.cloneNode(true));
+    this._root = this.attachShadow({ mode: "closed" });
+    this._root.appendChild(template.content.cloneNode(true));
 
-    this.elements = {
-      container: this.root.querySelector("#sevo-main-nav-container"),
-      logo: this.root.querySelector("#sevo-main-nav-logo"),
-      trigger: this.root.querySelector("#sevo-main-nav-trigger"),
-      overlay: this.root.querySelector("#sevo-main-nav-overlay"),
-      closeContainer: this.root.querySelector("#sevo-main-nav-close-container"),
-      closeTrigger: this.root.querySelector("#sevo-main-nav-close-trigger"),
-      overlayContent: this.root.querySelector("#sevo-main-nav-overlay-content"),
+    this._elements = {
+      container: this._root.querySelector("#sevo-main-nav-container"),
+      logo: this._root.querySelector("#sevo-main-nav-logo"),
+      trigger: this._root.querySelector("#sevo-main-nav-trigger"),
+      overlay: this._root.querySelector("#sevo-main-nav-overlay"),
+      closeContainer: this._root.querySelector(
+        "#sevo-main-nav-close-container"
+      ),
+      closeTrigger: this._root.querySelector("#sevo-main-nav-close-trigger"),
+      overlayContent: this._root.querySelector(
+        "#sevo-main-nav-overlay-content"
+      ),
     };
+
+    this._barBackgroundColor = "black";
+    this._barColor = "white";
+    this._overlayBackgroundColor = "rgba(0, 0, 0, .7)";
+    this._overlayColor = "white";
+  }
+
+  // _render
+  _render() {
+    // bar-background-color
+    if (this._barBackgroundColor) {
+      this._elements.container.style["background-color"] =
+        this._barBackgroundColor;
+    }
+
+    // bar-color
+    if (this._barColor) {
+      this._elements.container.style["color"] = this._barColor;
+    }
+
+    // overlay-background-color
+    if (this._overlayBackgroundColor) {
+      this._elements.overlay.style["background-color"] =
+        this._overlayBackgroundColor;
+    }
+
+    // overlay-color
+    if (this._overlayColor) {
+      this._elements.overlay.style["color"] = this._overlayColor;
+    }
   }
 
   static get events() {
@@ -109,87 +143,84 @@ class SevoMainNav extends HTMLElement {
     ];
   }
 
-  // barBackgroundColor
-  get barBackgroundColor() {
-    return this.getAttribute("bar-background-color");
-  }
-  set barBackgroundColor(value) {
-    this.setAttribute("bar-background-color", value);
-  }
-
-  // barColor
-  get barColor() {
-    return this.getAttribute("bar-color");
-  }
-  set barColor(value) {
-    this.setAttribute("bar-color", value);
-  }
-
-  // overlayBackgroundColor
-  get overlayBackgroundColor() {
-    return this.getAttribute("overlay-background-color");
-  }
-  set overlayBackgroundColor(value) {
-    this.setAttribute("overlay-background-color", value);
-  }
-
-  // overlayColor
-  get overlayColor() {
-    return this.getAttribute("overlay-color");
-  }
-  set overlayColor(value) {
-    this.setAttribute("overlay-color", value);
-  }
-
   // connectedCallback
   connectedCallback() {
+    this._render();
     // trigger
-    this.elements.trigger.addEventListener("click", () => {
+    this._elements.trigger.addEventListener("click", () => {
       this.openOverlay();
     });
 
     // close-trigger
-    this.elements.closeTrigger.addEventListener("click", () => {
+    this._elements.closeTrigger.addEventListener("click", () => {
       this.closeOverlay();
     });
   }
 
   // attributeChangedCallback
-  attributeChangedCallback() {
+  attributeChangedCallback(name, oldValue, newValue) {
+    if (oldValue === newValue) {
+      return;
+    }
+
     // bar-background-color
-    if (this.barBackgroundColor) {
-      this.elements.container.style["background-color"] =
-        this.barBackgroundColor;
+    if (name === "bar-background-color") {
+      this._barBackgroundColor = newValue;
+      this._render();
     }
 
     // bar-color
-    if (this.barColor) {
-      this.elements.container.style["color"] = this.barColor;
+    if (name === "bar-color") {
+      this._barColor = newValue;
+      this._render();
     }
 
     // overlay-background-color
-    if (this.overlayBackgroundColor) {
-      this.elements.overlay.style["background-color"] =
-        this.overlayBackgroundColor;
+    if (name === "overlay-background-color") {
+      this._overlayBackgroundColor = newValue;
+      this._render();
     }
 
     // overlay-color
-    if (this.overlayColor) {
-      this.elements.overlay.style["color"] = this.overlayColor;
+    if (name === "overlay-color") {
+      this._overlayColor = newValue;
+      this._render();
     }
+
+    // bar-background-color
+    /*     if (this.barBackgroundColor) {
+      this.elements.container.style["background-color"] =
+        this.barBackgroundColor;
+    } */
+
+    // bar-color
+    /*     if (this.barColor) {
+      this.elements.container.style["color"] = this.barColor;
+    } */
+
+    // overlay-background-color
+    /*     if (this.overlayBackgroundColor) {
+      this.elements.overlay.style["background-color"] =
+        this.overlayBackgroundColor;
+    } */
+
+    // overlay-color
+    /*     if (this.overlayColor) {
+      this.elements.overlay.style["color"] = this.overlayColor;
+    } */
   }
 
   // closeOverlay
   closeOverlay() {
-    this.elements.overlay.classList.add("display-none");
+    this._elements.overlay.classList.add("display-none");
     document.body.style["overflow-y"] = "auto";
-    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
+    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
   }
 
   openOverlay() {
-    this.elements.overlay.classList.remove("display-none");
+    this._elements.overlay.classList.remove("display-none");
     document.body.style["overflow-y"] = "hidden";
-    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
+    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
   }
 }
 
