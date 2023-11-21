@@ -71,8 +71,8 @@ class SevoCard extends HTMLElement {
   }
 
   connectedCallback() {
-    console.log("CARD conennected callback");
-    console.log(this.elements.cardFooterSlot.assignedNodes());
+    // console.log("CARD conennected callback");
+    // console.log(this.elements.cardFooterSlot.assignedNodes());
     if (this.elements.cardFooterSlot.assignedNodes().length === 0) {
       this.elements.cardFooter.style["display"] = "none";
     }

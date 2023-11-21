@@ -145,17 +145,11 @@ class SevoMainNav extends HTMLElement {
   connectedCallback() {
     // trigger
     this.elements.trigger.addEventListener("click", () => {
-      console.log("SevoMainNav", "trigger clicked");
-      /*       this.elements.overlay.classList.remove("display-none");
-      document.body.style["overflow-y"] = "hidden"; */
       this.openOverlay();
     });
 
     // close-trigger
     this.elements.closeTrigger.addEventListener("click", () => {
-      console.log("SevoMainNav", "closeTrigger clicked");
-      //   this.elements.overlay.classList.add("display-none");
-      //   document.body.style["overflow-y"] = "scroll";
       this.closeOverlay();
     });
   }

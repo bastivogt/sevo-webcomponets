@@ -28,7 +28,7 @@ body {
 }
 
 #header-image::part(container) {
-  height: 700px;
+  /*height: 700px;*/
 }
 
 #header-image > h1 {

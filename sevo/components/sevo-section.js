@@ -58,17 +58,27 @@ template.innerHTML = /*html*/ `
 class SevoSection extends HTMLElement {
   constructor() {
     super();
-    this.root = this.attachShadow({ mode: "closed" });
-    this.root.appendChild(template.content.cloneNode(true));
+    this._root = this.attachShadow({ mode: "closed" });
+    this._root.appendChild(template.content.cloneNode(true));
 
-    this.elements = {
-      sectionContainer: this.root.querySelector("#sevo-section-container"),
-      sectionInner: this.root.querySelector("#sevo-section-inner"),
+    this._elements = {
+      sectionContainer: this._root.querySelector("#sevo-section-container"),
+      sectionInner: this._root.querySelector("#sevo-section-inner"),
     };
+
+    // for the attributes
+    this._imageSrc = null;
+    this._contentHorizontal = "center";
+    this._contentVertical = "center";
+    this._backgroundColor = "transparent";
+    this._color = null;
+    this._height = null;
+    this._fixed = "false";
   }
 
   connectedCallback() {
     //console.log("CONNECTEDCALLBACK");
+    this._render();
   }
 
   static get observedAttributes() {
@@ -83,142 +93,122 @@ class SevoSection extends HTMLElement {
     ];
   }
 
-  // image-src
-  get imageSrc() {
-    return this.getAttribute("image-src");
-  }
-
-  set imageSrc(value) {
-    this.setAttribute("image-src", value);
-  }
-
-  // content-horizontal
-  get contentHorizontal() {
-    return this.getAttribute("content-horizontal");
-  }
-
-  set contentHorizontal(value) {
-    this.setAttribute("content-horizontal", value);
-  }
-
-  // content-vertical
-  get contentVertical() {
-    return this.getAttribute("content-vertical");
-  }
-
-  set contentVertical(value) {
-    this.setAttribute("content-vertical", value);
-  }
-
-  // background-color
-  get backgroundColor() {
-    return this.getAttribute("background-color");
-  }
-
-  set backgroundColor(value) {
-    this.setAttribute("background-color", value);
-  }
-
-  // color
-  get color() {
-    return this.getAttribute("color");
-  }
-
-  set color(value) {
-    return this.setAttribute("color", value);
-  }
-
-  // fixed
-  get fixed() {
-    const val = this.getAttribute("fixed");
-    if (val === "true" || val === true) {
-      return true;
+  // _render()
+  _render() {
+    // image-src
+    if (this._imageSrc) {
+      this._elements.sectionContainer.style[
+        "background-image"
+      ] = `url("${this._imageSrc}")`;
     }
-    return false;
-  }
+    // background-color
+    if (this._backgroundColor) {
+      this._elements.sectionContainer.style["background-color"] =
+        this._backgroundColor;
+    }
 
-  set fixed(value) {
-    this.setAttribute("fixed", value);
-  }
+    // color
+    if (this._color) {
+      this._elements.sectionContainer.style["color"] = this._color;
+    }
 
-  // height
-  get height() {
-    return this.getAttribute("height");
-  }
+    // fixed
+    if (this._fixed === "true") {
+      this._elements.sectionContainer.style["background-attachment"] = "fixed";
+    } else {
+      this._elements.sectionContainer.style["background-attachment"] = "scroll";
+    }
 
-  set height(value) {
-    this.setAttribute("height", value);
+    // height
+    if (this._height) {
+      this._elements.sectionContainer.style["height"] = `${this._height}`;
+    }
+
+    // content-horizontal
+    if (this._contentHorizontal) {
+      let value = "";
+      switch (this._contentHorizontal) {
+        case "start":
+          value = "flex-start";
+          break;
+        case "center":
+          value = "center";
+          break;
+        case "end":
+          value = "flex-end";
+          break;
+        default:
+          value = "flex-start";
+      }
+      this._elements.sectionInner.style["justify-content"] = value;
+    }
+
+    // content-vertical
+    if (this._contentVertical) {
+      let value = "";
+      switch (this._contentVertical) {
+        case "start":
+          value = "flex-start";
+          break;
+        case "center":
+          value = "center";
+          break;
+        case "end":
+          value = "flex-end";
+          break;
+        default:
+          value = "flex-start";
+      }
+      this._elements.sectionInner.style["align-items"] = value;
+    }
   }
 
   // sttributesChanged
   attributeChangedCallback(name, oldValue, newValue) {
-    // imageSrc
-    if (this.imageSrc) {
-      //console.log("SevoSection", "imageSrc", this.imageSrc);
-      this.elements.sectionContainer.style[
-        "background-image"
-      ] = `url("${this.imageSrc}")`;
+    if (oldValue === newValue) {
+      return;
     }
 
-    // backgroundColor
-    if (this.backgroundColor) {
-      this.elements.sectionContainer.style["background-color"] =
-        this.backgroundColor;
+    // image-src
+    if (name === "image-src") {
+      this._imageSrc = newValue;
+      this._remder();
+    }
+
+    // background-color
+    if (name === "background-color") {
+      this._backgroundColor = newValue;
+      this._render();
     }
 
     // color
-    if (this.color) {
-      this.elements.sectionContainer.style["color"] = this.color;
+    if (name === "color") {
+      this._color = newValue;
+      this._render();
     }
 
     // fixed
-    if (this.fixed) {
-      this.elements.sectionContainer.style["background-attachment"] = "fixed";
-    } else {
-      this.elements.sectionContainer.style["background-attachment"] = "scroll";
+    if (name === "fixed") {
+      this._fixed = newValue;
+      this._render();
     }
 
     // height
-    if (this.height) {
-      this.elements.sectionContainer.style["height"] = `${this.height}`;
+    if (name === "height") {
+      this._height = newValue;
+      this._render();
     }
 
-    // contentHorizontal
-    if (this.contentHorizontal) {
-      let value = "";
-      switch (this.contentHorizontal) {
-        case "start":
-          value = "flex-start";
-          break;
-        case "center":
-          value = "center";
-          break;
-        case "end":
-          value = "flex-end";
-          break;
-        default:
-          value = "flex-start";
-      }
-      this.elements.sectionInner.style["justify-content"] = value;
+    // content-horizontal
+    if (name === "content-horizontal") {
+      this._contentHorizontal = newValue;
+      this._render();
     }
 
-    // contentVertical
-    if (this.contentVertical) {
-      let value = "";
-      switch (this.contentVertical) {
-        case "start":
-          value = "flex-start";
-          break;
-        case "center":
-          value = "center";
-          break;
-        case "end":
-          value = "flex-end";
-          break;
-        default:
-          value = "flex-start";
-      }
-      this.elements.sectionInner.style["align-items"] = value;
+    // content-vertical
+    if (name === "content-vertical") {
+      this._contentVertical = newValue;
+      this._render();
     }
   }
 }
