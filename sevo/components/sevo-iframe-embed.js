@@ -4,14 +4,14 @@ const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
         #sevo-gmap-container {
-          height: 200px;
+          height: 450px;
             
         }
 
-        ::slotted(iframe) {
+        #sevo-gmap-container ::slotted(iframe) {
           width: 100vw;
 	        max-width: 100%;
-          height: 200px;
+          height: 450px;
         }
     </style>
     <div id="sevo-gmap-container">
@@ -19,7 +19,7 @@ template.innerHTML = /*html*/ `
     </div>
 `;
 
-class SevoGMapEmbed extends HTMLElement {
+class SevoIframeEmbed extends HTMLElement {
   constructor() {
     super();
 
@@ -48,7 +48,8 @@ class SevoGMapEmbed extends HTMLElement {
     // height
     if (this._height) {
       this._elements.container.style["height"] = this._height;
-      this._elements.slot.assignedNodes()[1].style["height"] = this._height;
+      this._elements.slot.assignedElements()[0].style["height"] = this._height;
+      //console.log(this._elements.slot.assignedElements());
     }
   }
 
@@ -66,4 +67,4 @@ class SevoGMapEmbed extends HTMLElement {
   }
 }
 
-customElements.define("sevo-gmap-embed", SevoGMapEmbed);
+customElements.define("sevo-iframe-embed", SevoIframeEmbed);
