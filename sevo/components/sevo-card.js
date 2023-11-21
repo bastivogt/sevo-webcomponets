@@ -28,6 +28,10 @@ template.innerHTML = /*html*/ `
             height: 100px;
         }
 
+        ::slotted(img) {
+          width: 100%;
+        }
+
     </style>
     <div id="sevo-card-container">
         <div part="header" id="sevo-card-header"><slot name="header"></slot></div>
@@ -68,10 +72,6 @@ class SevoCard extends HTMLElement {
     }
     if (this._elements.cardImageSlot.assignedNodes().length === 0) {
       this._elements.cardImage.style["display"] = "none";
-    } else {
-      this._elements.cardImageSlot
-        .assignedNodes()[0]
-        .setAttribute("width", "100%");
     }
 
     // body-min-height
