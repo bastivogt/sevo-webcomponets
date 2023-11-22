@@ -190,7 +190,12 @@ class SevoSection extends HTMLElement {
 
     // fixed
     if (name === "fixed") {
-      this._fixed = newValue;
+      if (newValue === "true" || newValue === "") {
+        this._fixed = "true";
+      } else {
+        this._fixed = "false";
+      }
+
       this._render();
     }
 
