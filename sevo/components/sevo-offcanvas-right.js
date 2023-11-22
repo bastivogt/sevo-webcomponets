@@ -106,13 +106,19 @@ template.innerHTML = /*html*/ `
 
         @media only screen and (max-width: 600px) {
             :host {
-                --offcanvas-width: 300px;
+                --offcanvas-width: 350px;
             }
         }
 
         @media only screen and (max-width: 400px) {
             :host {
-                --offcanvas-width: 200px;
+                --offcanvas-width: 300px;
+            }
+        }
+
+        @media only screen and (max-width: 350px) {
+            :host {
+                --offcanvas-width: 250px;
             }
         }
 
@@ -159,6 +165,13 @@ export default class SevoOffcanvasRight extends HTMLElement {
       console.log("offcanvas closeslot clicked");
       this.open(false);
     });
+    // touchmove
+    /*this._elements.offcanvas.addEventListener("touchmove", (evt) => {
+      console.log("touchmove");
+      this.open(false);
+    });*/
+
+    //
     this._setOpened(false, false);
     this._render();
   }
