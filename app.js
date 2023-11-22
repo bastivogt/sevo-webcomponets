@@ -22,13 +22,15 @@ document.body.addEventListener("body animationend", () => {
 });
 
 const nav = document.querySelector("sevo-main-nav");
-nav.addEventListener(SevoMainNav.events.OVERLAY_OPENED, (evt) => {
-  console.log(SevoMainNav.events.OVERLAY_OPENED, evt);
-});
+if (nav) {
+  nav.addEventListener(SevoMainNav.events.OVERLAY_OPENED, (evt) => {
+    console.log(SevoMainNav.events.OVERLAY_OPENED, evt);
+  });
 
-nav.addEventListener(SevoMainNav.events.OVERLAY_CLOSED, (evt) => {
-  console.log(SevoMainNav.events.OVERLAY_CLOSED, evt);
-});
+  nav.addEventListener(SevoMainNav.events.OVERLAY_CLOSED, (evt) => {
+    console.log(SevoMainNav.events.OVERLAY_CLOSED, evt);
+  });
+}
 
 // Modal
 const openModalBtn = document.querySelector("#open-modal");

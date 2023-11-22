@@ -9,7 +9,7 @@ template.innerHTML = /*html*/ `
         }
 
         :host {
-            --animation-speed: .5s;
+            --animation-time: .5s;
         }
 
 
@@ -65,11 +65,11 @@ template.innerHTML = /*html*/ `
 
 
         .fade-in {
-            animation: fade-in-animation var(--animation-speed) ease forwards;
+            animation: fade-in-animation var(--animation-time) ease forwards;
         }
 
         .fade-out {
-            animation: fade-out-animation var(--animation-speed) ease forwards;
+            animation: fade-out-animation var(--animation-time) ease forwards;
         }
 
         @keyframes fade-in-animation{

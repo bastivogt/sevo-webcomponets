@@ -9,7 +9,7 @@ template.innerHTML = /*html*/ `
 
         :host {
             --offcanvas-width: 500px;
-            --animation-speed: .5s;
+            --animation-time: .5s;
         }
         #offcanvas-container {
             position: fixed;
@@ -58,11 +58,11 @@ template.innerHTML = /*html*/ `
         }
 
         #offcanvas.slide-opened {
-            animation: slide-in-animation var(--animation-speed) ease forwards;
+            animation: slide-in-animation var(--animation-time) ease forwards;
         }
 
         #offcanvas.slide-closed {
-            animation: slide-out-animation var(--animation-speed) ease forwards;
+            animation: slide-out-animation var(--animation-time) ease forwards;
         }
 
         @keyframes slide-in-animation {
