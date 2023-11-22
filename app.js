@@ -2,6 +2,7 @@
 import "./sevo/components/init.js";
 import SevoMainNav from "./sevo/components/sevo-main-nav.js";
 import SevoModal from "./sevo/components/sevo-modal.js";
+import SevoOffcanvasLeft from "./sevo/components/sevo-offcanvas-left.js";
 
 console.log("app.js");
 
@@ -34,4 +35,11 @@ const openModalBtn = document.querySelector("#open-modal");
 const modal = document.querySelector("sevo-modal");
 openModalBtn.addEventListener("click", () => {
   modal.setOpened();
+});
+
+// offcanvas-left
+const openOffcanvasLeftBtn = document.querySelector("#open-offcanvas-left");
+const offcanvasLeft = document.querySelector("sevo-offcanvas-left");
+openOffcanvasLeftBtn.addEventListener("click", () => {
+  offcanvasLeft.setOpened();
 });

@@ -9,3 +9,4 @@ import "./sevo-card.js";
 import "./sevo-main-nav.js";
 import "./sevo-iframe-embed.js";
 import "./sevo-modal.js";
+import "./sevo-offcanvas-left.js";
