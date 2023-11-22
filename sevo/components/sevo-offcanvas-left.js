@@ -26,7 +26,6 @@ template.innerHTML = /*html*/ `
             height: 100vh;
             padding: 10px;
             color: white;
-            transition: all .5s ease;
         }
 
         #offcanvas-close {
@@ -40,7 +39,7 @@ template.innerHTML = /*html*/ `
         }
 
         #offcanvas.closed {
-            transform: translateX(-300px);
+            transform: translateX(-350px);
             /*transform: translateX(100 - var(--offcanvas-width));*/
 
         }
@@ -56,6 +55,7 @@ template.innerHTML = /*html*/ `
         @keyframes slide-in-animation {
             0% {
                 transform: translateX(-350px);
+                /*transform: translateX(calc(0 - var(--offcanvas-width)));*/
             }
             100% {
                 transform: translateX(0);
@@ -68,6 +68,7 @@ template.innerHTML = /*html*/ `
             }
             100% {
                 transform: translateX(-350px);
+                /*transform: translateX(calc(0 - var(--offcanvas-width)));*/
             }
         }
 
@@ -112,6 +113,7 @@ export default class SevoOffcanvasLeft extends HTMLElement {
       console.log("offcanvas closeslot clicked");
       this.setOpened(false);
     });
+    this.setOpened(false, false);
     this._render();
   }
 
@@ -120,15 +122,15 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     console.log("_opened:", this._opened);
     // opened
     if (this._opened) {
-      this.setOpened();
+      this.setOpened(true, this._animated);
     } else {
-      this.setOpened(false);
+      this.setOpened(false, this._animated);
     }
   }
 
   // setOpened
-  setOpened(flag = true) {
-    if (this._animated) {
+  setOpened(flag = true, animated = true) {
+    if (animated) {
       if (flag) {
         this._elements.container.classList.remove("display-none");
         this._elements.offcanvas.classList.remove("slide-closed");
@@ -158,7 +160,7 @@ export default class SevoOffcanvasLeft extends HTMLElement {
 
   // observedAttributes
   static get observedAttributes() {
-    return ["opened"];
+    return ["opened", "animated"];
   }
 
   // attributeChangedCallback
@@ -173,6 +175,16 @@ export default class SevoOffcanvasLeft extends HTMLElement {
         this._opened = true;
       } else {
         this._opened = false;
+      }
+      this._render();
+    }
+
+    // animated
+    if (name === "animated") {
+      if (newValue === "true" || newValue === "") {
+        this._animated = true;
+      } else {
+        this._animated = false;
       }
       this._render();
     }
