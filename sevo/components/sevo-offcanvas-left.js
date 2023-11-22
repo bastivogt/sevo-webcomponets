@@ -27,6 +27,7 @@ template.innerHTML = /*html*/ `
             height: 100vh;
             padding: 10px;
             color: white;
+            box-shadow: 4px 0px 15px 0px rgba(0,0,0,0.4);
         }
 
         #offcanvas-content {

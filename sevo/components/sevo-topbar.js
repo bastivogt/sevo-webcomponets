@@ -24,17 +24,7 @@ template.innerHTML = /*html*/ `
             left: 0;
         }
 
-        #content-left {
-            background-color: orange;
-        }
 
-        #content-center {
-            background-color: lime;
-        }
-
-        #content-right {
-            background-color: skyblue;
-        }
 
 
 
