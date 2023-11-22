@@ -404,7 +404,19 @@
         <sevo-section background-color="rebeccapurple" color="white">
           <button id="open-offcanvas-left">Open Offcanvas Left</button>
         </sevo-section>
-        <sevo-offcanvas-left animated></sevo-offcanvas-left>
+        <sevo-offcanvas-left animated backdrop-close color="yellow">
+          <div slot="content" class="main-navigation">
+            <nav>
+              <ul>
+                <li><a href="#" title="Home">Home</a></li>
+                <li><a href="#" title="About">About</a></li>
+                <li><a href="#" title="Team">Team</a></li>
+                <li><a href="#" title="Contact">Contact</a></li>
+              </ul>
+            </nav>
+            <div>TEST</div>
+          </div>
+        </sevo-offcanvas-left>
       </main>
     </div>
     <script type="module" src="app.js"></script>

@@ -29,6 +29,18 @@ template.innerHTML = /*html*/ `
             color: white;
         }
 
+        #offcanvas-content {
+            padding: 10px 0 10px 0;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100%;
+
+            overflow-y: auto;
+        }
+
         #offcanvas-close {
             display: flex;
             flex-direction: row;
@@ -81,23 +93,31 @@ template.innerHTML = /*html*/ `
             display: none !important;
         }
 
+        @media only screen and (max-width: 768px) {
+            :host {
+                --offcanvas-width: 500px;
+            }
+        }
+
         @media only screen and (max-width: 600px) {
             :host {
                 --offcanvas-width: 300px;
             }
         }
 
-        @media only screen and (max-width: 350px) {
+        @media only screen and (max-width: 400px) {
             :host {
                 --offcanvas-width: 200px;
             }
         }
 
     </style>
-    <div id="offcanvas-container">
-        <div id="offcanvas" class="opened">
-            <div id="offcanvas-close"><slot name="close"><button>x</button></slot></div>
-           
+    <div part="container" id="offcanvas-container">
+        <div part="offcanvas" id="offcanvas" class="opened">
+            <div part="close" id="offcanvas-close"><slot name="close"><button>x</button></slot></div>
+            <div part="content" id="offcanvas-content">
+                <div part="inner" id="offcanvas-content-inner"><slot name="content"></slot></div>
+            </div>
         </div>    
     </div>
 `;
@@ -122,6 +142,9 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     this._opened = false;
     this._animated = false;
     this._backdropClose = false;
+    this._backdropColor = "rgba(0, 0, 0, .4)";
+    this._backgroundColor = "black";
+    this._color = "white";
   }
 
   // connectedCallback
@@ -143,6 +166,29 @@ export default class SevoOffcanvasLeft extends HTMLElement {
       this._setOpened(true, this._animated);
     } else {
       this._setOpened(false, this._animated);
+    }
+
+    // backdrop-close
+    if (this._backdropClose) {
+      this._elements.container.addEventListener("click", () => {
+        this.open(false);
+      });
+    }
+
+    // backdrop-color
+    if (this._backdropColor) {
+      this._elements.container.style["background-color"] = this._backdropColor;
+    }
+
+    // background-color
+    if (this._backgroundColor) {
+      this._elements.offcanvas.style["background-color"] =
+        this._backgroundColor;
+    }
+
+    // color
+    if (this._color) {
+      this._elements.offcanvas.style["color"] = this._color;
     }
   }
 
@@ -181,7 +227,15 @@ export default class SevoOffcanvasLeft extends HTMLElement {
   }
   // observedAttributes
   static get observedAttributes() {
-    return ["opened", "animated", "width", "backdrop-close"];
+    return [
+      "opened",
+      "animated",
+      "width",
+      "backdrop-close",
+      "backdrop-color",
+      "background-color",
+      "color",
+    ];
   }
 
   // attributeChangedCallback
@@ -208,6 +262,31 @@ export default class SevoOffcanvasLeft extends HTMLElement {
         this._animated = false;
       }
       this._render();
+    }
+
+    //backdrop-close
+    if (name === "backdrop-close") {
+      if (newValue === "true" || newValue === "") {
+        this._backdropClose = true;
+      } else {
+        this._backdropClose = false;
+      }
+    }
+
+    // backdrop-color
+    if (name === "backdrop-color") {
+      this._backdropColor = newValue;
+      this._render();
+    }
+
+    // background-color
+    if (name === "background-color") {
+      this._backdropColor = newValue;
+    }
+
+    // color
+    if (name === "color") {
+      this._color = newValue;
     }
   }
 }
