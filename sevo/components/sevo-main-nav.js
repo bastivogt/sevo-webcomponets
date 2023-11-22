@@ -27,7 +27,7 @@ template.innerHTML = /*html*/ `
             right: 0;
             /*width: 100%;
             height: 100vh;*/
-            z-index: 9999;
+            z-index: 9998;
             background-color: rgba(0, 0, 0, .9);
             /*overflow-y: auto;*/
             
@@ -127,6 +127,7 @@ export default class SevoMainNav extends HTMLElement {
     this._overlayBackgroundColor = "rgba(0, 0, 0, .7)";
     this._overlayColor = "white";
     this._animated = false;
+    this._zIndex = "9998";
   }
 
   // _render
@@ -152,6 +153,11 @@ export default class SevoMainNav extends HTMLElement {
     if (this._overlayColor) {
       this._elements.overlay.style["color"] = this._overlayColor;
     }
+
+    // z-index
+    if (this._zIndex) {
+      this._elements.overlay.style["z-index"] = this._zIndex;
+    }
   }
 
   static get events() {
@@ -169,6 +175,7 @@ export default class SevoMainNav extends HTMLElement {
       "overlay-background-color",
       "overlay-color",
       "animated",
+      "z-index",
     ];
   }
 
@@ -224,6 +231,12 @@ export default class SevoMainNav extends HTMLElement {
       } else {
         this._animated = false;
       }
+    }
+
+    // z-index
+    if (name === "z-index") {
+      this._zIndex = newValue;
+      this._render();
     }
   }
 

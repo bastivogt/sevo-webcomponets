@@ -3,6 +3,7 @@
 const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
+
         #modal-container {
             position: fixed;
             z-index: 9999;
@@ -24,15 +25,18 @@ template.innerHTML = /*html*/ `
             width: 75%;
 
 
-            display: flex;
+            /*display: flex;
             flex-direction: column;
             justify-content: space-between;
-            flex-wrap: wrap;
+            flex-wrap: wrap;*/
+            border-radius: 4px;
+            border: 1px solid #eee;
 
         }
 
         #modal-header {
             padding: 10px;
+            border-bottom: 1px solid #eee;
         }
 
         #modal-main {
@@ -40,10 +44,11 @@ template.innerHTML = /*html*/ `
         }
 
         #modal-footer {
-            padding: 10px;
+            padding: 20px 10px;
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
+            border-top: 1px solid #eee;
 
         }
 
@@ -53,6 +58,13 @@ template.innerHTML = /*html*/ `
 
         .fade-out {
             animation: fade-out-animation .5s ease forwards;
+        }
+
+
+        @media only screen and (max-width: 768px) {
+            #modal {
+                width: 90%;
+            }
         }
 
         @keyframes fade-in-animation{
@@ -77,13 +89,13 @@ template.innerHTML = /*html*/ `
             display: none !important;
         }
     </style>
-    <div id="modal-container">
-        <div id="modal">
-            <header id="modal-header"><slot name="title"></slot></header>
-            <section id="modal-main">
+    <div part="container" id="modal-container">
+        <div part="modal" id="modal">
+            <header part="modal-header" id="modal-header"><slot name="title"></slot></header>
+            <section part="modal-content" id="modal-main">
                 <slot name="content"></slot>
             </section>
-            <footer id="modal-footer">
+            <footer part="modal-footer" id="modal-footer">
                 <slot name="close">
                     <button>Close</button>
                 </slot>
@@ -103,17 +115,29 @@ export default class SevoModal extends HTMLElement {
     this._elements = {
       container: this._root.querySelector("#modal-container"),
       slotClose: this._root.querySelector("slot[name='close']"),
+      modal: this._root.querySelector("#modal"),
+      modalHeader: this._root.querySelector("#modal-header"),
+      modalFooter: this._root.querySelector("#modal-footer"),
     };
 
     this._opened = false;
     this._backdropColor = "rgba(0, 0, 0, .6)";
     this._backdropClose = false;
     this._animated = false;
+    this._borderColor = "#eee";
+    this._zIndex = "9999";
   }
 
   // observedAttributes
   static get observedAttributes() {
-    return ["opened", "backdrop-color", "backdrop-close", "animated"];
+    return [
+      "opened",
+      "backdrop-color",
+      "backdrop-close",
+      "animated",
+      "border-color",
+      "z-index",
+    ];
   }
 
   _render() {
@@ -124,14 +148,16 @@ export default class SevoModal extends HTMLElement {
         this._elements.container.classList.remove("display-none");
         this._elements.container.classList.remove("fade-out");
         this._elements.container.classList.add("fade-in");
+        document.body.style["overflow-y"] = "hidden";
       } else {
         //this._elements.container.classList.add("display-none");
         this._elements.container.classList.remove("fade-in");
         this._elements.container.classList.add("fade-out");
-        // animation
+        document.body.style["overflow-y"] = "auto";
+        // animationend event
         this._elements.container.addEventListener("animationend", (evt) => {
-          console.log("animationend");
-          console.log(evt);
+          //console.log("animationend");
+          //console.log(evt);
           if (evt.animationName === "fade-out-animation") {
             this._elements.container.classList.add("display-none");
           }
@@ -140,14 +166,32 @@ export default class SevoModal extends HTMLElement {
     } else {
       if (this._opened) {
         this._elements.container.classList.remove("display-none");
+        document.body.style["overflow-y"] = "hidden";
       } else {
         this._elements.container.classList.add("display-none");
+        document.body.style["overflow-y"] = "auto";
       }
     }
 
     // backdrop-color
     if (this._backdropColor) {
       this._elements.container.style["background-color"] = this._backdropColor;
+    }
+
+    // border-color
+    if (this._borderColor) {
+      this._elements.modal.style["border"] = `1px solid ${this._borderColor}`;
+      this._elements.modalHeader.style[
+        "border-bottom"
+      ] = `1px solid ${this._borderColor}`;
+      this._elements.modalFooter.style[
+        "border-top"
+      ] = `1px solid ${this._borderColor}`;
+    }
+
+    // z-index
+    if (this._zIndex) {
+      this._elements.container.style["z-index"] = this._zIndex;
     }
   }
 
@@ -205,6 +249,18 @@ export default class SevoModal extends HTMLElement {
     // backdrop-color
     if (name === "backdrop-color") {
       this._backdropColor = newValue;
+      this._render();
+    }
+
+    // border-color
+    if (name === "border-color") {
+      this._borderColor = newValue;
+      this._render;
+    }
+
+    // z-index
+    if (name === "z-index") {
+      this._zIndex = newValue;
       this._render();
     }
   }
