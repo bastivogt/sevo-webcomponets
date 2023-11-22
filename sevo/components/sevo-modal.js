@@ -27,6 +27,8 @@ template.innerHTML = /*html*/ `
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            flex-wrap: wrap;
+
         }
 
         #modal-header {
