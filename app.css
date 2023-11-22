@@ -80,3 +80,8 @@ sevo-card h6 {
 .main-navigation a:hover {
   color: rebeccapurple;
 }
+
+/* offcanvas */
+sevo-offcanvas-left {
+  --animation-speed: 0.2s;
+}

@@ -226,9 +226,11 @@ export default class SevoModal extends HTMLElement {
       this.setOpened(false);
     });
 
-    this._elements.container.addEventListener("click", () => {
+    this._elements.container.addEventListener("click", (evt) => {
       if (this._backdropClose) {
-        this.setOpened(false);
+        if (evt.target === this._elements.container) {
+          this.setOpened(false);
+        }
       }
     });
   }
@@ -281,6 +283,16 @@ export default class SevoModal extends HTMLElement {
     // border-radius
     if (name === "border-radius") {
       this._borderRadius = newValue;
+      this._render();
+    }
+
+    // backdrop-close
+    if (name === "backdrop-close") {
+      if (newValue === "true" || newValue === "") {
+        this._backdropClose = true;
+      } else {
+        this._backdropClose = false;
+      }
       this._render();
     }
   }

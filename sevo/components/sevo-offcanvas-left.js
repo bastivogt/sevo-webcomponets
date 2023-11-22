@@ -170,8 +170,10 @@ export default class SevoOffcanvasLeft extends HTMLElement {
 
     // backdrop-close
     if (this._backdropClose) {
-      this._elements.container.addEventListener("click", () => {
-        this.open(false);
+      this._elements.container.addEventListener("click", (evt) => {
+        if (evt.target === this._elements.container) {
+          this.open(false);
+        }
       });
     }
 
