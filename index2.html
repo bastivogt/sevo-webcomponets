@@ -18,7 +18,7 @@
           <button id="main-menu-open-trigger">Menu</button>
         </div>
       </sevo-topbar>
-      <sevo-offcanvas-left
+      <!-- <sevo-offcanvas-left
         id="main-menu-offcanvas"
         animated
         backdrop-close
@@ -35,7 +35,25 @@
           </nav>
           <div>TEST</div>
         </div>
-      </sevo-offcanvas-left>
+      </sevo-offcanvas-left> -->
+      <sevo-offcanvas-right
+        id="main-menu-offcanvas"
+        animated
+        backdrop-close
+        color="yellow"
+      >
+        <div slot="content" class="main-navigation">
+          <nav>
+            <ul>
+              <li><a href="/" title="Home">Home</a></li>
+              <li><a href="/index2.html" title="About">Index 2</a></li>
+              <li><a href="#" title="Team">Team</a></li>
+              <li><a href="#" title="Contact">Contact</a></li>
+            </ul>
+          </nav>
+          <div>TEST</div>
+        </div>
+      </sevo-offcanvas-right>
       <header>
         <sevo-section
           id="header-image"
