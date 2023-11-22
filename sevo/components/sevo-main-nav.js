@@ -101,7 +101,7 @@ template.innerHTML = /*html*/ `
     <section part="overlay" id="sevo-main-nav-overlay" class="display-none">
         
         <div part="overlay-content-container" id="sevo-main-nav-content-container">
-            <div part="close-trigger" id="sevo-main-nav-close-trigger"><slot name="close-trigger"></slot></div>
+            <div part="close-trigger" id="sevo-main-nav-close-trigger"><slot name="close-trigger"><button>x</button</slot></div>
             <div part="overlay-content" id="sevo-main-nav-overlay-content"><slot name="content"></slot></div>
         </div>
     </section>
