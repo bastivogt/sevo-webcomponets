@@ -3,6 +3,9 @@
 const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
+        * {
+            box-sizing: border-box;
+        }
         #sevo-3-columns-container {
             display: flex;
             flex-direction: row;

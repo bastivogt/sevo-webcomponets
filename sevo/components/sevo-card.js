@@ -3,6 +3,9 @@
 const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
+        * {
+            box-sizing: border-box;
+        }
         #sevo-card-container {
             box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.4);
             margin: 20px;

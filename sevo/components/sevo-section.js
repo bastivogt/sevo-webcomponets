@@ -20,6 +20,9 @@
 const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
+        * {
+            box-sizing: border-box;
+        }
         #sevo-section-container {
             display: flex;
             flex-direction: row;

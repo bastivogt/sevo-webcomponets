@@ -7,6 +7,12 @@ template.innerHTML = /*html*/ `
         * {
             box-sizing: border-box;
         }
+
+        :host {
+            --animation-speed: .5s;
+        }
+
+
         #sevo-main-nav-container {
             padding: 10px 10px;
             display: flex;
@@ -59,11 +65,11 @@ template.innerHTML = /*html*/ `
 
 
         .fade-in {
-            animation: fade-in-animation .5s ease forwards;
+            animation: fade-in-animation var(--animation-speed) ease forwards;
         }
 
         .fade-out {
-            animation: fade-out-animation .5s ease forwards;
+            animation: fade-out-animation var(--animation-speed) ease forwards;
         }
 
         @keyframes fade-in-animation{

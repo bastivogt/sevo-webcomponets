@@ -8,7 +8,8 @@ template.innerHTML = /*html*/ `
         }
 
         :host {
-            --offcanvas-width: 350px;
+            --offcanvas-width: 500px;
+            --animation-speed: .5s;
         }
         #offcanvas-container {
             position: fixed;
@@ -45,16 +46,17 @@ template.innerHTML = /*html*/ `
         }
 
         #offcanvas.slide-opened {
-            animation: slide-in-animation .5s ease forwards;
+            animation: slide-in-animation var(--animation-speed) ease forwards;
         }
 
         #offcanvas.slide-closed {
-            animation: slide-out-animation .5s ease forwards;
+            animation: slide-out-animation var(--animation-speed) ease forwards;
         }
 
         @keyframes slide-in-animation {
             0% {
-                transform: translateX(-350px);
+                /*transform: translateX(-350px);*/
+                transform: translateX(calc(0px - var(--offcanvas-width)));
                 /*transform: translateX(calc(0 - var(--offcanvas-width)));*/
             }
             100% {
@@ -67,7 +69,8 @@ template.innerHTML = /*html*/ `
                 transform: translateX(0);
             }
             100% {
-                transform: translateX(-350px);
+                /*transform: translateX(-350px);*/
+                transform: translateX(calc(0px - var(--offcanvas-width)));
                 /*transform: translateX(calc(0 - var(--offcanvas-width)));*/
             }
         }
@@ -76,6 +79,18 @@ template.innerHTML = /*html*/ `
 
         .display-none {
             display: none !important;
+        }
+
+        @media only screen and (max-width: 768px) {
+            :host {
+                --offcanvas-width: 300px;
+            }
+        }
+
+        @media only screen and (max-width: 300px) {
+            :host {
+                --offcanvas-width: 200px;
+            }
         }
 
     </style>
@@ -94,16 +109,20 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     this._root = this.attachShadow({ mode: "closed" });
     this._root.appendChild(template.content.cloneNode(true));
 
+    this._opened = false;
+    this._width = "700px";
+    this._animated = true;
+    this._backdropClose = false;
+
+    //this._root = this.attachShadow({ mode: "closed" });
+    //this._createInnerHTML();
+
     this._elements = {
       container: this._root.querySelector("#offcanvas-container"),
       offcanvas: this._root.querySelector("#offcanvas"),
       close: this._root.querySelector("#offcanvas-close"),
       closeSlot: this._root.querySelector("#offcanvas-close > slot"),
     };
-
-    this._opened = false;
-    this._width = "350px";
-    this._animated = true;
   }
 
   // connectedCallback
@@ -119,7 +138,6 @@ export default class SevoOffcanvasLeft extends HTMLElement {
 
   // _render
   _render() {
-    console.log("_opened:", this._opened);
     // opened
     if (this._opened) {
       this.setOpened(true, this._animated);
@@ -160,7 +178,7 @@ export default class SevoOffcanvasLeft extends HTMLElement {
 
   // observedAttributes
   static get observedAttributes() {
-    return ["opened", "animated"];
+    return ["opened", "animated", "width", "backdrop-close"];
   }
 
   // attributeChangedCallback
@@ -186,6 +204,12 @@ export default class SevoOffcanvasLeft extends HTMLElement {
       } else {
         this._animated = false;
       }
+      this._render();
+    }
+
+    // width
+    if (name === "width") {
+      this._width = newValue;
       this._render();
     }
   }

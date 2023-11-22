@@ -3,6 +3,13 @@
 const template = document.createElement("template");
 template.innerHTML = /*html*/ `
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :host {
+            --animation-speed: .5s;
+        }
 
         #modal-container {
             position: fixed;
@@ -53,11 +60,11 @@ template.innerHTML = /*html*/ `
         }
 
         .fade-in {
-            animation: fade-in-animation .5s ease forwards;
+            animation: fade-in-animation var(--animation-speed) ease forwards;
         }
 
         .fade-out {
-            animation: fade-out-animation .5s ease forwards;
+            animation: fade-out-animation var(--animation-speed) ease forwards;
         }
 
 
