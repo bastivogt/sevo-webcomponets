@@ -17,6 +17,7 @@
         bar-color="white"
         overlay-color="yellow"
         overlay-background-color="rgba(0, 0, 0, .9)"
+        animated
       >
         <div slot="logo"><h2>Logo</h2></div>
         <div slot="trigger">Menu</div>
@@ -383,6 +384,23 @@
             >
           </div>
         </sevo-iframe-embed> -->
+        <sevo-section>
+          <button id="open-modal">Open Modal</button>
+        </sevo-section>
+        <sevo-modal animated>
+          <h2 slot="title">Mein cooles Modal</h2>
+          <p slot="content">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
+            reprehenderit consequuntur expedita nesciunt. Eum, praesentium earum
+            blanditiis velit voluptatem eaque repudiandae, dolores doloribus
+            quis accusamus officiis qui sunt provident veniam labore temporibus?
+            Rerum illo sit blanditiis enim! Expedita ipsam architecto dicta
+            tenetur deserunt reprehenderit nostrum animi vel cupiditate? Fugit,
+            quos expedita. Asperiores hic a perspiciatis ullam voluptates ab,
+            mollitia cum.
+          </p>
+          <button slot="close">Schließen</button>
+        </sevo-modal>
       </main>
     </div>
     <script type="module" src="app.js"></script>

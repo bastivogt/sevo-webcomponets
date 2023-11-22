@@ -57,6 +57,33 @@ template.innerHTML = /*html*/ `
 
         }
 
+
+        .fade-in {
+            animation: fade-in-animation .5s ease forwards;
+        }
+
+        .fade-out {
+            animation: fade-out-animation .5s ease forwards;
+        }
+
+        @keyframes fade-in-animation{
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+        @keyframes fade-out-animation{
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0
+            }
+        }
+
         .display-none {
             display: none !important;
         }
@@ -99,6 +126,7 @@ export default class SevoMainNav extends HTMLElement {
     this._barColor = "white";
     this._overlayBackgroundColor = "rgba(0, 0, 0, .7)";
     this._overlayColor = "white";
+    this._animated = false;
   }
 
   // _render
@@ -140,11 +168,13 @@ export default class SevoMainNav extends HTMLElement {
       "bar-color",
       "overlay-background-color",
       "overlay-color",
+      "animated",
     ];
   }
 
   // connectedCallback
   connectedCallback() {
+    console.log("animated", this._animated);
     this._render();
     // trigger
     this._elements.trigger.addEventListener("click", () => {
@@ -187,40 +217,48 @@ export default class SevoMainNav extends HTMLElement {
       this._render();
     }
 
-    // bar-background-color
-    /*     if (this.barBackgroundColor) {
-      this.elements.container.style["background-color"] =
-        this.barBackgroundColor;
-    } */
-
-    // bar-color
-    /*     if (this.barColor) {
-      this.elements.container.style["color"] = this.barColor;
-    } */
-
-    // overlay-background-color
-    /*     if (this.overlayBackgroundColor) {
-      this.elements.overlay.style["background-color"] =
-        this.overlayBackgroundColor;
-    } */
-
-    // overlay-color
-    /*     if (this.overlayColor) {
-      this.elements.overlay.style["color"] = this.overlayColor;
-    } */
+    // animated
+    if (name === "animated") {
+      if (newValue === "true" || newValue === "") {
+        this._animated = true;
+      } else {
+        this._animated = false;
+      }
+    }
   }
 
   // closeOverlay
   closeOverlay() {
-    this._elements.overlay.classList.add("display-none");
-    document.body.style["overflow-y"] = "auto";
-    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
+    if (this._animated) {
+      this._elements.overlay.classList.remove("fade-in");
+      this._elements.overlay.classList.add("fade-out");
+      //this._elements.overlay.classList.add("display-none");
+      document.body.style["overflow-y"] = "auto";
+      this._elements.overlay.addEventListener("animationend", (evt) => {
+        if (evt.animationName === "fade-out-animation") {
+          this._elements.overlay.classList.add("display-none");
+        }
+      });
+      this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
+    } else {
+      this._elements.overlay.classList.add("display-none");
+      document.body.style["overflow-y"] = "auto";
+      this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_CLOSED));
+    }
   }
 
   openOverlay() {
-    this._elements.overlay.classList.remove("display-none");
-    document.body.style["overflow-y"] = "hidden";
-    this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
+    if (this._animated) {
+      this._elements.overlay.classList.remove("display-none");
+      document.body.style["overflow-y"] = "hidden";
+      this._elements.overlay.classList.remove("fade-out");
+      this._elements.overlay.classList.add("fade-in");
+      this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
+    } else {
+      this._elements.overlay.classList.remove("display-none");
+      document.body.style["overflow-y"] = "hidden";
+      this.dispatchEvent(new Event(SevoMainNav.events.OVERLAY_OPENED));
+    }
   }
 }
 

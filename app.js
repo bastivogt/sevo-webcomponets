@@ -1,6 +1,7 @@
 "use strict";
 import "./sevo/components/init.js";
 import SevoMainNav from "./sevo/components/sevo-main-nav.js";
+import SevoModal from "./sevo/components/sevo-modal.js";
 
 console.log("app.js");
 
@@ -26,4 +27,11 @@ nav.addEventListener(SevoMainNav.events.OVERLAY_OPENED, (evt) => {
 
 nav.addEventListener(SevoMainNav.events.OVERLAY_CLOSED, (evt) => {
   console.log(SevoMainNav.events.OVERLAY_CLOSED, evt);
+});
+
+// Modal
+const openModalBtn = document.querySelector("#open-modal");
+const modal = document.querySelector("sevo-modal");
+openModalBtn.addEventListener("click", () => {
+  modal.setOpened();
 });
