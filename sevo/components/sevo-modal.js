@@ -29,7 +29,7 @@ template.innerHTML = /*html*/ `
             flex-direction: column;
             justify-content: space-between;
             flex-wrap: wrap;*/
-            border-radius: 4px;
+            /*border-radius: 4px;*/
             border: 1px solid #eee;
 
         }
@@ -126,6 +126,7 @@ export default class SevoModal extends HTMLElement {
     this._animated = false;
     this._borderColor = "#eee";
     this._zIndex = "9999";
+    this._borderRadius = "3px";
   }
 
   // observedAttributes
@@ -137,6 +138,7 @@ export default class SevoModal extends HTMLElement {
       "animated",
       "border-color",
       "z-index",
+      "border-radius",
     ];
   }
 
@@ -192,6 +194,11 @@ export default class SevoModal extends HTMLElement {
     // z-index
     if (this._zIndex) {
       this._elements.container.style["z-index"] = this._zIndex;
+    }
+
+    // border-radius
+    if (this._borderRadius) {
+      this._elements.modal.style["border-radius"] = this._borderRadius;
     }
   }
 
@@ -261,6 +268,12 @@ export default class SevoModal extends HTMLElement {
     // z-index
     if (name === "z-index") {
       this._zIndex = newValue;
+      this._render();
+    }
+
+    // border-radius
+    if (name === "border-radius") {
+      this._borderRadius = newValue;
       this._render();
     }
   }
