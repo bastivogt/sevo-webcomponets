@@ -41,5 +41,5 @@ openModalBtn.addEventListener("click", () => {
 const openOffcanvasLeftBtn = document.querySelector("#open-offcanvas-left");
 const offcanvasLeft = document.querySelector("sevo-offcanvas-left");
 openOffcanvasLeftBtn.addEventListener("click", () => {
-  offcanvasLeft.setOpened();
+  offcanvasLeft.open();
 });

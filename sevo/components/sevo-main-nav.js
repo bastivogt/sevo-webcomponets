@@ -187,7 +187,6 @@ export default class SevoMainNav extends HTMLElement {
 
   // connectedCallback
   connectedCallback() {
-    console.log("animated", this._animated);
     this._render();
     // trigger
     this._elements.trigger.addEventListener("click", () => {

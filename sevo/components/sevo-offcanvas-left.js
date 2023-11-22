@@ -81,13 +81,13 @@ template.innerHTML = /*html*/ `
             display: none !important;
         }
 
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 600px) {
             :host {
                 --offcanvas-width: 300px;
             }
         }
 
-        @media only screen and (max-width: 300px) {
+        @media only screen and (max-width: 350px) {
             :host {
                 --offcanvas-width: 200px;
             }
@@ -109,11 +109,6 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     this._root = this.attachShadow({ mode: "closed" });
     this._root.appendChild(template.content.cloneNode(true));
 
-    this._opened = false;
-    this._width = "700px";
-    this._animated = true;
-    this._backdropClose = false;
-
     //this._root = this.attachShadow({ mode: "closed" });
     //this._createInnerHTML();
 
@@ -123,6 +118,10 @@ export default class SevoOffcanvasLeft extends HTMLElement {
       close: this._root.querySelector("#offcanvas-close"),
       closeSlot: this._root.querySelector("#offcanvas-close > slot"),
     };
+
+    this._opened = false;
+    this._animated = false;
+    this._backdropClose = false;
   }
 
   // connectedCallback
@@ -130,24 +129,25 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     // close
     this._elements.closeSlot.addEventListener("click", () => {
       console.log("offcanvas closeslot clicked");
-      this.setOpened(false);
+      this.open(false);
     });
-    this.setOpened(false, false);
+    this._setOpened(false, false);
     this._render();
   }
 
   // _render
   _render() {
+    console.log("offcanvas, animated:", this._animated);
     // opened
     if (this._opened) {
-      this.setOpened(true, this._animated);
+      this._setOpened(true, this._animated);
     } else {
-      this.setOpened(false, this._animated);
+      this._setOpened(false, this._animated);
     }
   }
 
   // setOpened
-  setOpened(flag = true, animated = true) {
+  _setOpened(flag = true, animated = true) {
     if (animated) {
       if (flag) {
         this._elements.container.classList.remove("display-none");
@@ -176,6 +176,9 @@ export default class SevoOffcanvasLeft extends HTMLElement {
     }
   }
 
+  open(flag = true) {
+    this._setOpened(flag, this._animated);
+  }
   // observedAttributes
   static get observedAttributes() {
     return ["opened", "animated", "width", "backdrop-close"];
@@ -204,12 +207,6 @@ export default class SevoOffcanvasLeft extends HTMLElement {
       } else {
         this._animated = false;
       }
-      this._render();
-    }
-
-    // width
-    if (name === "width") {
-      this._width = newValue;
       this._render();
     }
   }
