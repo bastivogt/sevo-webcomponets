@@ -67,6 +67,14 @@ template.innerHTML = /*html*/ `
             animation: fade-out-animation var(--animation-time) ease forwards;
         }
 
+        .slide-in {
+            animation: slide-in-animation var(--animation-time) ease forwards;
+        }
+
+        .slide-out {
+            animation: slide-out-animation var(--animation-time) ease forwards;
+        }
+
 
         @media only screen and (max-width: 768px) {
             #modal {
@@ -89,6 +97,25 @@ template.innerHTML = /*html*/ `
             }
             100% {
                 opacity: 0
+            }
+        }
+
+        @keyframes slide-in-animation{
+            0% {
+                transform: translateY(-200px);
+            }
+            100% {
+                transform: translateY(0)
+            }
+        }
+
+
+        @keyframes slide-out-animation{
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-200px)
             }
         }
 
@@ -156,12 +183,16 @@ export default class SevoModal extends HTMLElement {
       if (this._opened) {
         this._elements.container.classList.remove("display-none");
         this._elements.container.classList.remove("fade-out");
+        this._elements.modal.classList.remove("slide-out");
         this._elements.container.classList.add("fade-in");
+        this._elements.modal.classList.add("slide-in");
         document.body.style["overflow-y"] = "hidden";
       } else {
         //this._elements.container.classList.add("display-none");
         this._elements.container.classList.remove("fade-in");
+        this._elements.modal.classList.remove("slide-in");
         this._elements.container.classList.add("fade-out");
+        this._elements.modal.classList.add("slide-out");
         document.body.style["overflow-y"] = "auto";
         // animationend event
         this._elements.container.addEventListener("animationend", (evt) => {
