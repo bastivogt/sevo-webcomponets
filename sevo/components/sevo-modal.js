@@ -8,7 +8,7 @@ template.innerHTML = /*html*/ `
         }
 
         :host {
-            --animation-time: .5s;
+            --animation-time: .3s;
         }
 
         #modal-container {
@@ -56,6 +56,7 @@ template.innerHTML = /*html*/ `
             flex-direction: row;
             justify-content: flex-end;
             border-top: 1px solid #eee;
+            gap: 5px;
 
         }
 
@@ -130,8 +131,11 @@ template.innerHTML = /*html*/ `
                 <slot name="content"></slot>
             </section>
             <footer part="modal-footer" id="modal-footer">
-                <slot name="close">
-                    <button>Close</button>
+                <slot name="ok">
+                    <button>OK</button>
+                </slot>
+                <slot name="cancel">
+                    <button>Cancel</button>
                 </slot>
                 
             </footer>
@@ -148,7 +152,8 @@ export default class SevoModal extends HTMLElement {
 
     this._elements = {
       container: this._root.querySelector("#modal-container"),
-      slotClose: this._root.querySelector("slot[name='close']"),
+      slotCancel: this._root.querySelector("slot[name='cancel']"),
+      slotOK: this._root.querySelector("slot[name='ok']"),
       modal: this._root.querySelector("#modal"),
       modalHeader: this._root.querySelector("#modal-header"),
       modalFooter: this._root.querySelector("#modal-footer"),
@@ -252,15 +257,22 @@ export default class SevoModal extends HTMLElement {
   connectedCallback() {
     this._render();
 
-    // close
-    this._elements.slotClose.addEventListener("click", () => {
+    // cancel
+    this._elements.slotCancel.addEventListener("click", () => {
       this.setOpened(false);
+      this.dispatchEvent(new Event("cancel"));
+    });
+    // ok
+    this._elements.slotOK.addEventListener("click", () => {
+      this.setOpened(false);
+      this.dispatchEvent(new Event("ok"));
     });
 
     this._elements.container.addEventListener("click", (evt) => {
       if (this._backdropClose) {
         if (evt.target === this._elements.container) {
           this.setOpened(false);
+          this.dispatchEvent(new Event("cancel"));
         }
       }
     });
@@ -279,7 +291,7 @@ export default class SevoModal extends HTMLElement {
       } else {
         this._opened = false;
       }
-      console.log(this._opened);
+      //console.log(this._opened);
       this._render();
     }
 

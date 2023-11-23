@@ -9,7 +9,7 @@ template.innerHTML = /*html*/ `
 
         :host {
             --offcanvas-width: 500px;
-            --animation-time: .5s;
+            --animation-time: .3s;
         }
         #offcanvas-container {
             position: fixed;

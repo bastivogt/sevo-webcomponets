@@ -39,6 +39,14 @@ openModalBtn.addEventListener("click", () => {
   modal.setOpened();
 });
 
+modal.addEventListener("cancel", () => {
+  console.log("modal cancel");
+});
+
+modal.addEventListener("ok", () => {
+  console.log("modal OK");
+});
+
 // offcanvas-left
 const openOffcanvasLeftBtn = document.querySelector("#open-offcanvas-left");
 const offcanvasLeft = document.querySelector("sevo-offcanvas-left");

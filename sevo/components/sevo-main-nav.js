@@ -9,7 +9,7 @@ template.innerHTML = /*html*/ `
         }
 
         :host {
-            --animation-time: .5s;
+            --animation-time: .3s;
         }
 
 
