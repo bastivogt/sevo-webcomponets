@@ -212,6 +212,7 @@ export default class SevoOffcanvasLeft extends HTMLElement {
   _setOpened(flag = true, animated = true) {
     if (animated) {
       if (flag) {
+        this.setAttribute("opened", "");
         this._elements.container.classList.remove("display-none");
         this._elements.offcanvas.classList.remove("slide-closed");
         this._elements.offcanvas.classList.add("slide-opened");
@@ -222,11 +223,13 @@ export default class SevoOffcanvasLeft extends HTMLElement {
         this._elements.offcanvas.addEventListener("animationend", (evt) => {
           if (evt.animationName === "slide-out-animation") {
             this._elements.container.classList.add("display-none");
+            this.removeAttribute("opened");
           }
         });
       }
     } else {
       if (flag) {
+        this.setAttribute("opened", "");
         this._elements.container.classList.remove("display-none");
         this._elements.offcanvas.classList.remove("closed");
         this._elements.offcanvas.classList.add("opened");
@@ -234,6 +237,7 @@ export default class SevoOffcanvasLeft extends HTMLElement {
         this._elements.container.classList.add("display-none");
         this._elements.offcanvas.classList.add("closed");
         this._elements.offcanvas.classList.remove("opened");
+        this.removeAttribute("opened");
       }
     }
   }
