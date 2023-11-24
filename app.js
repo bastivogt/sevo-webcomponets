@@ -4,6 +4,8 @@ import SevoMainNav from "./sevo/components/sevo-main-nav.js";
 import SevoModal from "./sevo/components/sevo-modal.js";
 import SevoOffcanvasLeft from "./sevo/components/sevo-offcanvas-left.js";
 
+import SevoConfirm from "./sevo/components/sevo-confirm.js";
+
 console.log("app.js");
 
 const headerImage = document.getElementById("header-image");
@@ -53,3 +55,31 @@ const offcanvasLeft = document.querySelector("sevo-offcanvas-left");
 openOffcanvasLeftBtn.addEventListener("click", () => {
   offcanvasLeft.open();
 });
+
+// confirm
+const openConfirmButton = document.querySelector("#open-confirm-button");
+const myConfirm = document.querySelector("#my-confirm");
+if (openConfirmButton) {
+  openConfirmButton.addEventListener("click", () => {
+    myConfirm.open(myConfirm.animated);
+  });
+}
+
+if (myConfirm) {
+  //myConfirm.backdropColor = "blue";
+  myConfirm.addEventListener(SevoConfirm.events.CONFIRM_OPENED, () => {
+    console.log(SevoConfirm.events.CONFIRM_OPENED);
+  });
+
+  myConfirm.addEventListener(SevoConfirm.events.CONFIRM_CLOSED, () => {
+    console.log(SevoConfirm.events.CONFIRM_CLOSED);
+  });
+
+  myConfirm.addEventListener(SevoConfirm.events.CONFIRM_OK, () => {
+    console.log(SevoConfirm.events.CONFIRM_OK);
+  });
+
+  myConfirm.addEventListener(SevoConfirm.events.CONFIRM_CANCEL, () => {
+    console.log(SevoConfirm.events.CONFIRM_CANCEL);
+  });
+}

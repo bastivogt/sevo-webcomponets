@@ -12,3 +12,5 @@ import "./sevo-modal.js";
 import "./sevo-offcanvas-left.js";
 import "./sevo-offcanvas-right.js";
 import "./sevo-topbar.js";
+
+import "./sevo-confirm.js";

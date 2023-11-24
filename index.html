@@ -417,6 +417,24 @@
             <div>TEST</div>
           </div>
         </sevo-offcanvas-left>
+
+        <sevo-section>
+          <button id="open-confirm-button">Open Confirm</button>
+        </sevo-section>
+        <!-- confirm-->
+        <sevo-confirm id="my-confirm" backdrop-close animated opened>
+          <h3 slot="header">Confirm Title</h3>
+          <p slot="content">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor
+            numquam minima quam, natus iusto, nisi voluptatibus assumenda nihil
+            ipsum, possimus impedit optio dignissimos voluptatum ab dolore
+            necessitatibus ea maiores fugiat ex eum omnis ducimus qui pariatur
+            quos. Voluptatem dolore nostrum assumenda qui debitis animi, numquam
+            eveniet! Repellat debitis veniam ea.
+          </p>
+          <button slot="ok">OK</button>
+          <button slot="cancel">Cancel</button>
+        </sevo-confirm>
       </main>
     </div>
     <script type="module" src="app.js"></script>
