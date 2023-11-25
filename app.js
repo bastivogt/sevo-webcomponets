@@ -66,7 +66,7 @@ if (openConfirmButton) {
 }
 
 if (myConfirm) {
-  myConfirm.backdropColor = "blue";
+  //myConfirm.backdropColor = "blue";
   myConfirm.addEventListener(SevoConfirm.events.CONFIRM_OPENED, () => {
     console.log(SevoConfirm.events.CONFIRM_OPENED);
   });

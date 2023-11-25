@@ -15,9 +15,11 @@ template.innerHTML = /*html*/ `
             --animation-time: .3s;
             --slide-way: 400px;
             --footer-gap: 5px;
-            --max-width-desktop: 75%;
-            --max-width-tablet: 90%;
+            --max-width-large: 75%;
+            --max-width-medium: 90%;
+            --max-width-small: 94%;
             --padding: 20px 10px;
+            --z-index: 99999;
 
         }
         #header ::slotted(h1),
@@ -36,6 +38,7 @@ template.innerHTML = /*html*/ `
 
         #backdrop {
             position: fixed;
+            z-index: var(--z-index);
             top: 0;
             left: 0;
             bottom: 0;
@@ -53,13 +56,14 @@ template.innerHTML = /*html*/ `
 
         #confirm {
             margin-top: 100px;
-            max-width: var(--max-width-desktop);
+            max-width: var(--max-width-large);
             width: 100%;
             background-color: var(--background-color);
             height: auto;
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             border: 1px solid var(--border-color);
+            
         }
 
         #header {
@@ -114,11 +118,23 @@ template.innerHTML = /*html*/ `
             display: none !important;
         }
 
+
+        /* medium */
         @media only screen and (max-width: 768px) {
             #confirm {
-                max-width: var(--max-width-tablet);
+                max-width: var(--max-width-medium);
             }
         }
+
+        /* small */
+        @media only screen and (max-width: 576px) {
+            #confirm {
+                max-width: var(--max-width-small);
+                margin-top: 3%;
+                margin-bottom: 3%;
+            }
+        }
+
 
 
     </style>
