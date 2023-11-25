@@ -14,3 +14,4 @@ import "./sevo-offcanvas-right.js";
 import "./sevo-topbar.js";
 
 import "./sevo-confirm.js";
+import "./sevo-lightbox.js";

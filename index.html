@@ -421,8 +421,9 @@
         <sevo-section>
           <button id="open-confirm-button">Open Confirm</button>
         </sevo-section>
+
         <!-- confirm-->
-        <sevo-confirm id="my-confirm" backdrop-close animated opened>
+        <sevo-confirm id="my-confirm" backdrop-close animated>
           <h3 slot="header">Confirm Title</h3>
           <p slot="content">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolor
@@ -435,6 +436,24 @@
           <button slot="ok">OK</button>
           <button slot="cancel">Cancel</button>
         </sevo-confirm>
+
+        <sevo-section background-color="rebeccapurple">
+          <button id="open-lightbox-button">Open Lightbox</button>
+        </sevo-section>
+        <sevo-lightbox opened>
+          <div slot="close"><button>Close</button></div>
+          <div slot="content" class="main-navigation">
+            <nav>
+              <ul>
+                <li><a href="#" title="Home">Home</a></li>
+                <li><a href="#" title="About">About</a></li>
+                <li><a href="#" title="Team">Team</a></li>
+                <li><a href="#" title="Contact">Contact</a></li>
+              </ul>
+            </nav>
+            <div>TEST</div>
+          </div>
+        </sevo-lightbox>
       </main>
     </div>
     <script type="module" src="app.js"></script>
