@@ -195,6 +195,7 @@ export default class SevoConfirm extends HTMLElement {
     }
   }
 
+  // animated
   get animated() {
     const value = this.getAttribute("animated");
     if (value === "true" || value === "") {
@@ -239,6 +240,7 @@ export default class SevoConfirm extends HTMLElement {
     this.setAttribute("backdrop-color", value);
   }
 
+  // animation-time
   get animationTime() {
     return this.getAttribute("animation-time");
   }
