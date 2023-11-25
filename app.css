@@ -90,3 +90,8 @@ sevo-offcanvas-left {
 #main-menu-offcanvas {
   /*--animation-time: 0.4s;*/
 }
+
+#my-confirm {
+  --border-radius: 3px;
+  --backdrop-color: rgba(0, 0, 0, 0.7);
+}

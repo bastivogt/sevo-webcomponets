@@ -13,6 +13,11 @@ template.innerHTML = /*html*/ `
             --box-shadow: 0px 0px 20px 2px rgba(0,0,0,0.4);
             --border-radius: 6px;
             --animation-time: .3s;
+            --slide-way: 400px;
+            --footer-gap: 5px;
+            --max-width-desktop: 75%;
+            --max-width-tablet: 90%;
+            --padding: 20px 10px;
 
         }
         #header ::slotted(h1),
@@ -27,6 +32,8 @@ template.innerHTML = /*html*/ `
             margin: 0;
             padding: 0;
         }
+
+
         #backdrop {
             position: fixed;
             top: 0;
@@ -46,7 +53,7 @@ template.innerHTML = /*html*/ `
 
         #confirm {
             margin-top: 100px;
-            max-width: 75%;
+            max-width: var(--max-width-desktop);
             width: 100%;
             background-color: var(--background-color);
             height: auto;
@@ -56,30 +63,30 @@ template.innerHTML = /*html*/ `
         }
 
         #header {
-            padding: 20px 10px;
+            padding: var(--padding);
             border-bottom: 1px solid var(--border-color);
         }
 
         #content {
-            padding: 20px 10px;
+            padding: var(--padding);
         }
 
         #footer {
-            padding: 20px 10px;
+            padding: var(--padding);
             border-top: 1px solid var(--border-color);
 
             display: flex;
             flex-direction: row;
             justify-content: flex-end;
             align-items: center;
-            gap: 5px;
+            gap: var(--footer-gap);
         }
 
 
 
         @keyframes slide-down-animation {
             0% {
-                transform: translateY(-100px);
+                transform: translateY(calc(0px - var(--slide-way)));
             }
             100% {
                 transform: translateY(0);
@@ -91,7 +98,7 @@ template.innerHTML = /*html*/ `
                 transform: translateY(0);
             }
             100% {
-                transform: translateY(-100px);
+                transform: translateY(calc(0px - var(--slide-way)));
             }
         }
 
@@ -107,7 +114,11 @@ template.innerHTML = /*html*/ `
             display: none !important;
         }
 
-
+        @media only screen and (max-width: 768px) {
+            #confirm {
+                max-width: var(--max-width-tablet);
+            }
+        }
 
 
     </style>
@@ -212,6 +223,15 @@ export default class SevoConfirm extends HTMLElement {
     this.setAttribute("backdrop-color", value);
   }
 
+  get animationTime() {
+    return this.getAttribute("animation-time");
+  }
+
+  set animationTime(value) {
+    this.setAttribute("animatio-time");
+  }
+
+  // CSS vars
   _getCssVar(name) {
     const styles = getComputedStyle(this);
     return styles.getPropertyValue(name);
@@ -238,8 +258,12 @@ export default class SevoConfirm extends HTMLElement {
     }
 
     if (this.backdropColor) {
-      //console.log("--backdrop-color:", this._getCssVar("--backdrop-color"));
       this._setCssVar("--backdrop-color", this.backdropColor);
+    }
+
+    // animation-time
+    if (this.animationTime) {
+      this._setCssVar("--animation-time", this.animationTime);
     }
   }
 
@@ -263,7 +287,6 @@ export default class SevoConfirm extends HTMLElement {
       this._elements.confirm.classList.remove("slide-down");
       this._elements.confirm.classList.add("slide-up");
       this._elements.confirm.addEventListener("animationend", (evt) => {
-        console.log(evt.animationName);
         if (evt.animationName === "slide-up-animation") {
           this._elements.backdrop.classList.add("hidden");
           document.body.style["overflow-y"] = "auto";
@@ -279,7 +302,13 @@ export default class SevoConfirm extends HTMLElement {
 
   // observedAttribute
   static get observedAttributes() {
-    return ["opened", "animated", "backdrop-close", "backdrop-color"];
+    return [
+      "opened",
+      "animated",
+      "backdrop-close",
+      "backdrop-color",
+      "animation-time",
+    ];
   }
 
   // connectedCallback
@@ -293,7 +322,7 @@ export default class SevoConfirm extends HTMLElement {
       this.close(this.animated);
       this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_OK));
     });
-
+    // cancel
     this._elements.slotCancel.addEventListener("click", () => {
       this.close(this.animated);
       this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CANCEL));
@@ -309,6 +338,12 @@ export default class SevoConfirm extends HTMLElement {
     // backdrop-color
     if (name === "backdrop-color") {
       this.backdropColor = newValue;
+      this._render();
+    }
+
+    // animation-time
+    if (name === "animation-time") {
+      this.animationTime = newValue;
       this._render();
     }
   }
