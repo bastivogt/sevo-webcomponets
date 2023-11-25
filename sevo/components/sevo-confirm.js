@@ -334,18 +334,19 @@ export default class SevoConfirm extends HTMLElement {
     if (oldValue === newValue) {
       return;
     }
+    this._render();
 
     // backdrop-color
-    if (name === "backdrop-color") {
-      this.backdropColor = newValue;
+    /*if (name === "backdrop-color") {
+      //this.backdropColor = newValue;
       this._render();
-    }
+    }*/
 
     // animation-time
-    if (name === "animation-time") {
-      this.animationTime = newValue;
+    /*if (name === "animation-time") {
+      //this.animationTime = newValue;
       this._render();
-    }
+    }*/
   }
 }
 
