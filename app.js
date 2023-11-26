@@ -5,6 +5,7 @@ import SevoModal from "./sevo/components/sevo-modal.js";
 import SevoOffcanvasLeft from "./sevo/components/sevo-offcanvas-left.js";
 
 import SevoConfirm from "./sevo/components/sevo-confirm.js";
+import { SevoLightbox } from "./sevo/components/sevo-lightbox.js";
 
 console.log("app.js");
 
@@ -61,12 +62,13 @@ const openConfirmButton = document.querySelector("#open-confirm-button");
 const myConfirm = document.querySelector("#my-confirm");
 if (openConfirmButton) {
   openConfirmButton.addEventListener("click", () => {
-    myConfirm.open(myConfirm.animated);
+    myConfirm.open(false);
   });
 }
 
 if (myConfirm) {
   //myConfirm.backdropColor = "blue";
+  let count = 0;
   myConfirm.addEventListener(SevoConfirm.events.CONFIRM_OPENED, () => {
     console.log(SevoConfirm.events.CONFIRM_OPENED);
   });
@@ -83,3 +85,19 @@ if (myConfirm) {
     console.log(SevoConfirm.events.CONFIRM_CANCEL);
   });
 }
+
+// lightbox
+const openLightboxButton = document.querySelector("#open-lightbox-button");
+const myLightbox = document.querySelector("#my-lightbox");
+
+openLightboxButton.addEventListener("click", () => {
+  myLightbox.open(myLightbox.animated);
+});
+
+myLightbox.addEventListener(SevoLightbox.events.LIGHTBOX_OPENED, () => {
+  console.log(SevoLightbox.events.LIGHTBOX_OPENED);
+});
+
+myLightbox.addEventListener(SevoLightbox.events.LIGHTBOX_CLOSED, () => {
+  console.log(SevoLightbox.events.LIGHTBOX_CLOSED);
+});

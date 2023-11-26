@@ -49,11 +49,11 @@ template.innerHTML = /*html*/ `
 
 
     .fade-in {
-        animation: slide-in-animation var(--animation-time) ease forwards;
+        animation: fade-in-animation var(--animation-time) ease forwards;
     }
 
     .fade-out {
-        animation: slide-out-animation var(--animation-time) ease forwards;
+        animation: fade-out-animation var(--animation-time) ease forwards;
     }
 
 
@@ -98,6 +98,9 @@ export class SevoLightbox extends HTMLElement {
       slotClose: this._root.querySelector("slot[name='close'"),
       close: this._root.querySelector("#close"),
     };
+
+    this._fadeInFinished = () => {};
+    this._fadeOutFinished = () => {};
   }
 
   // Props
@@ -125,7 +128,7 @@ export class SevoLightbox extends HTMLElement {
     if (value === "true" || value === "") {
       return true;
     } else {
-      false;
+      return false;
     }
   }
 
@@ -147,12 +150,23 @@ export class SevoLightbox extends HTMLElement {
 
   // connectedCallback
   connectedCallback() {
-    this.close(false);
+    //this.close(false);
     this._render();
 
     // close
     this._elements.slotClose.addEventListener("click", () => {
-      this.close();
+      this.close(this.animated);
+    });
+
+    // fade
+    this._elements.backdrop.addEventListener("animationend", (evt) => {
+      if (evt.animationName === "fade-out-animation") {
+        this._fadeOutFinished();
+      }
+
+      if (evt.animationName === "fade-in-animation") {
+        this._fadeInFinished();
+      }
     });
   }
 
@@ -190,16 +204,45 @@ export class SevoLightbox extends HTMLElement {
 
   // open
   open(animated = true) {
-    this._elements.backdrop.classList.remove("hidden");
-    document.body.style["overflow-y"] = "hidden";
-    this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_OPENED));
+    if (animated) {
+      this._elements.backdrop.classList.remove("hidden");
+      document.body.style["overflow-y"] = "hidden";
+      this._elements.backdrop.classList.remove("fade-out");
+      this._elements.backdrop.classList.add("fade-in");
+      this._fadeInFinished = () => {
+        this.opened = true;
+        this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_OPENED));
+      };
+
+      //this.opened = true;
+    } else {
+      this._elements.backdrop.classList.remove("hidden");
+      document.body.style["overflow-y"] = "hidden";
+      console.log("open na");
+      this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_OPENED));
+      //this.opened = true;
+    }
   }
 
   // close
   close(animated = true) {
-    this._elements.backdrop.classList.add("hidden");
-    document.body.style["overflow-y"] = "auto";
-    this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_CLOSED));
+    if (animated) {
+      this._elements.backdrop.classList.remove("fade-in");
+      this._elements.backdrop.classList.add("fade-out");
+      document.body.style["overflow-y"] = "auto";
+
+      this._fadeOutFinished = () => {
+        this._elements.backdrop.classList.add("hidden");
+        document.body.style["overflow-y"] = "auto";
+        this.opened = false;
+        this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_CLOSED));
+      };
+    } else {
+      this._elements.backdrop.classList.add("hidden");
+      document.body.style["overflow-y"] = "auto";
+      this.dispatchEvent(new Event(SevoLightbox.events.LIGHTBOX_CLOSED));
+      //this.opened = false;
+    }
   }
 }
 

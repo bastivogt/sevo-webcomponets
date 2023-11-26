@@ -166,6 +166,14 @@ export default class SevoConfirm extends HTMLElement {
       slotOK: this._root.querySelector("slot[name='ok']"),
       slotCancel: this._root.querySelector("slot[name='cancel']"),
     };
+
+    this._opened = null;
+    this._animated = null;
+    this._backdropClose = null;
+    this._backdropColor = null;
+    this._backgroundColor = null;
+
+    this._animationendFlag = false;
   }
 
   static get events() {
@@ -175,78 +183,6 @@ export default class SevoConfirm extends HTMLElement {
       CONFIRM_OPENED: "confirm-opened",
       CONFIRM_CLOSED: "confirm-closed",
     };
-  }
-
-  // opened
-  get opened() {
-    const value = this.getAttribute("opened");
-    if (value === "true" || value === "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  set opened(value) {
-    if (value === true) {
-      this.setAttribute("opened", "");
-    } else {
-      this.removeAttribute("opened");
-    }
-  }
-
-  // animated
-  get animated() {
-    const value = this.getAttribute("animated");
-    if (value === "true" || value === "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  set animated(value) {
-    if (value === true) {
-      this.setAttribute("animated", "");
-    } else {
-      this.removeAttribute("animated");
-    }
-  }
-
-  // backdrop-close
-  get backdropClose() {
-    const value = this.getAttribute("backdrop-close");
-    if (value === "true" || value === "") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  set backdropClose(value) {
-    if (value === true) {
-      this.setAttribute("backdrop-close", "");
-    } else {
-      this.removeAttribute("backdrop-close");
-    }
-  }
-
-  // backdrop-color
-  get backdropColor() {
-    return this.getAttribute("backdrop-color");
-  }
-
-  set backdropColor(value) {
-    this.setAttribute("backdrop-color", value);
-  }
-
-  // animation-time
-  get animationTime() {
-    return this.getAttribute("animation-time");
-  }
-
-  set animationTime(value) {
-    this.setAttribute("animatio-time");
   }
 
   // CSS vars
@@ -259,43 +195,26 @@ export default class SevoConfirm extends HTMLElement {
     this.style.setProperty(name, value);
   }
 
-  _render() {
-    if (this.opened) {
-      this.open(this.animated);
-    } else {
-      this.close(this.animated);
-    }
-
-    // backdrop-close
-    if (this.backdropClose) {
-      this._elements.backdrop.addEventListener("click", (evt) => {
-        if (evt.target === this._elements.backdrop) {
-          this.close(this.animated);
-        }
-      });
-    }
-
-    if (this.backdropColor) {
-      this._setCssVar("--backdrop-color", this.backdropColor);
-    }
-
-    // animation-time
-    if (this.animationTime) {
-      this._setCssVar("--animation-time", this.animationTime);
-    }
-  }
+  _render() {}
 
   open(animated = true) {
-    console.log("open animated", animated);
     if (animated) {
+      console.log("open a", animated);
+      console.log(this._animated);
       this._elements.backdrop.classList.remove("hidden");
       this._elements.confirm.classList.remove("slide-up");
       document.body.style["overflow-y"] = "hidden";
       this._elements.confirm.classList.add("slide-down");
       this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_OPENED));
+      //this.opened = true;
     } else {
+      console.log("open b", animated);
+      console.log(this._animated);
       this._elements.backdrop.classList.remove("hidden");
       document.body.style["overflow-y"] = "hidden";
+      //this.opened = true;
+      this.setAttribute("opened", "");
+      console.log("open bbbccc");
       this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_OPENED));
     }
   }
@@ -304,16 +223,13 @@ export default class SevoConfirm extends HTMLElement {
     if (animated) {
       this._elements.confirm.classList.remove("slide-down");
       this._elements.confirm.classList.add("slide-up");
-      this._elements.confirm.addEventListener("animationend", (evt) => {
-        if (evt.animationName === "slide-up-animation") {
-          this._elements.backdrop.classList.add("hidden");
-          document.body.style["overflow-y"] = "auto";
-          this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CLOSED));
-        }
-      });
+      this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CLOSED));
     } else {
       this._elements.backdrop.classList.add("hidden");
       document.body.style["overflow-y"] = "auto";
+      //this.opened = false;
+      this.removeAttribute("opened");
+      console.log("close aaaccc");
       this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CLOSED));
     }
   }
@@ -331,20 +247,75 @@ export default class SevoConfirm extends HTMLElement {
 
   // connectedCallback
   connectedCallback() {
-    this.close(false);
-    this._render();
+    //this._render();
+
+    // animationend
+    this._elements.confirm.addEventListener(
+      "animationend",
+      this._animationEndHandler.bind(this)
+    );
 
     // buttons
     // ok
-    this._elements.slotOK.addEventListener("click", () => {
-      this.close(this.animated);
-      this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_OK));
-    });
+    this._elements.slotOK.addEventListener(
+      "click",
+      this._slotOKHandler.bind(this)
+    );
     // cancel
-    this._elements.slotCancel.addEventListener("click", () => {
-      this.close(this.animated);
-      this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CANCEL));
-    });
+    this._elements.slotCancel.addEventListener(
+      "click",
+      this._slotCancelHandler.bind(this)
+    );
+
+    if (this._backdropClose) {
+      this._elements.backdrop.addEventListener(
+        "click",
+        this._backdropCloseHandler.bind(this)
+      );
+    }
+  }
+
+  disconnectedCallback() {
+    this._elements.confirm.removeEventListener(
+      "animationend",
+      this._animationEndHandler
+    );
+    this._elements.slotOK.removeEventListener("click", this._slotOKHandler);
+    this._elements.slotCancel.removeEventListener(
+      "click",
+      this._slotCancelHandler
+    );
+    this._elements._backdropClose.removeEventListener(
+      "click",
+      this._backdropCloseHandler
+    );
+  }
+
+  // Handler
+  _animationEndHandler(evt) {
+    console.log(evt);
+    if (evt.animationName === "slide-up-animation") {
+      this._elements.backdrop.classList.add("hidden");
+      document.body.style["overflow-y"] = "auto";
+      //this.opened = false;
+      this.removeAttribute("opened");
+    }
+  }
+
+  _slotOKHandler(evt) {
+    this.close(this.animated);
+    this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_OK));
+  }
+
+  _slotCancelHandler(evt) {
+    this.close(this.animated);
+    this.dispatchEvent(new Event(SevoConfirm.events.CONFIRM_CANCEL));
+  }
+
+  _backdropCloseHandler(evt) {
+    if (evt.target === this._elements.backdrop) {
+      this.close(this._animated);
+    }
   }
 
   // attributeChangedCallback
@@ -352,19 +323,45 @@ export default class SevoConfirm extends HTMLElement {
     if (oldValue === newValue) {
       return;
     }
-    this._render();
+
+    // animated
+    if (name === "animated") {
+      if (newValue === "true" || newValue === "") {
+        this._animated = true;
+      } else {
+        this._animated = false;
+      }
+      //this._render();
+    }
+
+    // opened
+    if (name === "opened") {
+      if (newValue === "true" || newValue === "") {
+        //this._opened = true;
+        console.log("attr", this._animated);
+        this.open(this._animated);
+      } else {
+        this.close(this._animated);
+        //this._opened = false;
+      }
+      //this._render();
+    }
+
+    // backdrop-close
+    if (name === "backdrop-close") {
+      if (newValue === "true" || newValue === "") {
+        this._backdropClose = true;
+      } else {
+        this._backdropClose = false;
+      }
+      //this._render();
+    }
 
     // backdrop-color
-    /*if (name === "backdrop-color") {
-      //this.backdropColor = newValue;
-      this._render();
-    }*/
-
-    // animation-time
-    /*if (name === "animation-time") {
-      //this.animationTime = newValue;
-      this._render();
-    }*/
+    if (name === "backdrop-color") {
+      this._backdropColor = newValue;
+      this._setCssVar("--backdrop-color", this._backdropColor);
+    }
   }
 }
 
